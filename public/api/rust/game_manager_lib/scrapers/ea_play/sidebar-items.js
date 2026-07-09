@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fetch_ea_play_catalog"],"struct":["EAPlayGame"]};

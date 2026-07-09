@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fetch_ubisoft_plus_catalog"],"struct":["UbisoftGame"]};

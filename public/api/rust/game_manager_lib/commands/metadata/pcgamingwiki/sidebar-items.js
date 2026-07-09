@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_or_fetch_pcgw_data","get_pcgw_scraped_data","refresh_pcgw_data","search_pcgw_games"],"struct":["PcgwScrapedResponse"]};

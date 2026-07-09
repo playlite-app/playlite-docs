@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["covers","enrichment","get_metadata","pcgamingwiki","refresh","search","shared"]};

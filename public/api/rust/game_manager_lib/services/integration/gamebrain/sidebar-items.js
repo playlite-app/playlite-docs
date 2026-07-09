@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["GameBrainSort","GameBrainSortOrder"],"fn":["fetch_game_media","fetch_similar_games","search_games_by_features","search_pc_games_by_features"],"struct":["GameBrainFilter","GameBrainFilterValue","GameBrainSearchParams","GameBrainSearchResult","GameMedia","SimilarGame"]};

@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["epic","heroic","legacy","providers","scanner","steam","ubisoft"]};

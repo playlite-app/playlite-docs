@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["search_pcgw_by_name"],"struct":["PcgwSearchResult"]};

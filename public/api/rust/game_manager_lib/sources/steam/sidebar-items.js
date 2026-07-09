@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_complete_library","merge_games","scan_installed_games","scan_library_cache"],"struct":["GameData","SteamSource"]};

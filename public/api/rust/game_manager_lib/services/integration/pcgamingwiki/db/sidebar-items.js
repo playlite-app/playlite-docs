@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_game_data_paths","get_pcgw_data","get_system_requirements","initialize_pcgamingwiki_tables","invalidate_pcgw_data","save_pcgw_data","save_scraped_data"]};

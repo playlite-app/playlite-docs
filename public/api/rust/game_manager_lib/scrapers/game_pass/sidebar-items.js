@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fetch_game_pass_pc_catalog"],"struct":["GamePassGame"]};

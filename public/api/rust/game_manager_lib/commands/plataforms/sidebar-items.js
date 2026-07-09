@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["add_game_from_scan","add_games_from_scan","import_epic_games","import_heroic_games","import_legacy_games","import_steam_library","import_ubisoft_games","scan_games_folder"],"struct":["ScanGameInput","ScanResult"]};

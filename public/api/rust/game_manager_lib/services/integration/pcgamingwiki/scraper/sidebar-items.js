@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fetch_wikitext","parse_game_data_paths","parse_system_requirements","scrape_pcgw_page"]};
