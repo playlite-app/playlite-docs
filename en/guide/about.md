@@ -61,6 +61,6 @@ documentation and in the project's official repository.
 
 For downloads, news, and general information about the project, visit the official channels of Playlite:
 
-- **Official Website:** [https://landing-page-alan-oliveirs-projects.vercel.app/en](https://playlite-site.vercel.app/en)
+- **Official Website:** [https://playlite-site.vercel.app/en](https://playlite-site.vercel.app/en)
 - **GitHub Repository:** [https://github.com/playlite-app/playlite](https://github.com/playlite-app/playlite)
 - **Latest Release:** [https://github.com/playlite-app/playlite/releases/latest](https://github.com/playlite-app/playlite/releases/latest)
