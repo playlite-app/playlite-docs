@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["translate_query_to_english","translate_text"]};

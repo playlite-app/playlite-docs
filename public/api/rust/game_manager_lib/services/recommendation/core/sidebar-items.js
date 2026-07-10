@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["SeriesLimit"],"fn":["calculate_game_weight","parse_release_year"],"struct":["GameWithDetails","RecommendationConfig","RecommendationReason","UserPreferenceVector","UserSettings"]};

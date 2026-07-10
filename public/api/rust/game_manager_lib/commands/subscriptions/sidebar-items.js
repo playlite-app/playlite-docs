@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_amazon_luna_catalog","get_ea_play_catalog","get_game_pass_catalog","get_subscription_settings","get_ubisoft_plus_catalog","save_subscription_settings"]};

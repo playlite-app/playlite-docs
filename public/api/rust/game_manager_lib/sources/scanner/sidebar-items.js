@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["ExecutableType"],"fn":["scan_folder"],"struct":["ExecutableCandidate","GameDiscovery","ScanSession","ScanSource"]};

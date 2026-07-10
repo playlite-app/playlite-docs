@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["fetch_game_details","get_active_giveaways","get_game_media","get_profile_similar_games","get_similar_games","get_trending_games","get_upcoming_games"],"struct":["ProfileSimilarGame"]};
