@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["add_game_from_scan","add_games_from_scan","scan_games_folder"]};

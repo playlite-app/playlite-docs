@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["generate_state","wait_for_auth_code"],"struct":["AuthCallbackResult","PkceChallenge"]};

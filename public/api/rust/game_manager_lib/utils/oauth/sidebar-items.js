@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["wait_for_auth_code"],"struct":["PkceChallenge"]};
+window.SIDEBAR_ITEMS = {"mod":["config","core","token_store"]};

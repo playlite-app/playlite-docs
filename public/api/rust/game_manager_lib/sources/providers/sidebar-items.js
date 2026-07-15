@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["SourceGame"],"trait":["GameSource"]};
+window.SIDEBAR_ITEMS = {"struct":["SourceGame"],"trait":["GameSource","OAuthGameSource"]};

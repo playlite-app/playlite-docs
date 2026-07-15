@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["gog_is_authenticated","gog_login","gog_logout","import_gog_games"]};
