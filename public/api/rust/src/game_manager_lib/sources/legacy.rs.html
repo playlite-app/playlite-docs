@@ -119,7 +119,7 @@
 <a href=#119 id=119 data-nosnippet>119</a>            <span class="kw">let </span>cut = <span class="kw-2">&amp;</span>trimmed[..rest.len()];
 <a href=#120 id=120 data-nosnippet>120</a>            <span class="comment">// Remove separadores opcionais antes do sufixo: espaço, hífen, vírgula, dois-pontos
 <a href=#121 id=121 data-nosnippet>121</a>            </span><span class="kw">return </span>cut
-<a href=#122 id=122 data-nosnippet>122</a>                .trim_end_matches(|c: char| c == <span class="string">'-' </span>|| c == <span class="string">':' </span>|| c == <span class="string">',' </span>|| c == <span class="string">' '</span>)
+<a href=#122 id=122 data-nosnippet>122</a>            .trim_end_matches([<span class="string">'-'</span>, <span class="string">':'</span>, <span class="string">','</span>, <span class="string">' '</span>])
 <a href=#123 id=123 data-nosnippet>123</a>                .trim()
 <a href=#124 id=124 data-nosnippet>124</a>                .to_string();
 <a href=#125 id=125 data-nosnippet>125</a>        }
