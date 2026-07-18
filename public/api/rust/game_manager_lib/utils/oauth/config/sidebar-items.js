@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["TokenRequestMethod"],"fn":["build_authorize_url","exchange_code_for_token","refresh_access_token"],"struct":["OAuthProviderConfig","OAuthToken","TokenResponse"]};
+window.SIDEBAR_ITEMS = {"enum":["TokenAuthMethod","TokenRequestMethod"],"fn":["build_authorize_url","exchange_code_for_token","refresh_access_token"],"struct":["OAuthProviderConfig","OAuthToken","TokenResponse"]};

@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["EpicSource"]};
+window.SIDEBAR_ITEMS = {"fn":["merge_local_install_status"],"struct":["EpicSource"]};

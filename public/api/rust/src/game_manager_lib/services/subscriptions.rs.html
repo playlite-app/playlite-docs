@@ -165,43 +165,44 @@
 <a href=#165 id=165 data-nosnippet>165</a>    <span class="prelude-val">Ok</span>(games)
 <a href=#166 id=166 data-nosnippet>166</a>}
 <a href=#167 id=167 data-nosnippet>167</a>
-<a href=#168 id=168 data-nosnippet>168</a><span class="kw">pub fn </span>get_enabled_services(state: <span class="kw-2">&amp;</span>State&lt;<span class="lifetime">'_</span>, AppState&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;String&gt;, String&gt; {
-<a href=#169 id=169 data-nosnippet>169</a>    <span class="kw">let </span>conn = state.games_db.lock().map_err(|e| e.to_string())<span class="question-mark">?</span>;
-<a href=#170 id=170 data-nosnippet>170</a>    <span class="kw">let </span><span class="kw-2">mut </span>stmt = conn
-<a href=#171 id=171 data-nosnippet>171</a>        .prepare(<span class="string">"SELECT service FROM subscriptions WHERE enabled = 1"</span>)
-<a href=#172 id=172 data-nosnippet>172</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
-<a href=#173 id=173 data-nosnippet>173</a>
-<a href=#174 id=174 data-nosnippet>174</a>    <span class="kw">let </span>services = stmt
-<a href=#175 id=175 data-nosnippet>175</a>        .query_map([], |row| row.get::&lt;<span class="kw">_</span>, String&gt;(<span class="number">0</span>))
-<a href=#176 id=176 data-nosnippet>176</a>        .map_err(|e| e.to_string())<span class="question-mark">?
-<a href=#177 id=177 data-nosnippet>177</a>        </span>.filter_map(|r| r.ok())
-<a href=#178 id=178 data-nosnippet>178</a>        .collect();
-<a href=#179 id=179 data-nosnippet>179</a>
-<a href=#180 id=180 data-nosnippet>180</a>    <span class="prelude-val">Ok</span>(services)
-<a href=#181 id=181 data-nosnippet>181</a>}
-<a href=#182 id=182 data-nosnippet>182</a>
-<a href=#183 id=183 data-nosnippet>183</a><span class="doccomment">/// Salva quais serviços o usuário assina
-<a href=#184 id=184 data-nosnippet>184</a></span><span class="kw">pub fn </span>set_enabled_services(
-<a href=#185 id=185 data-nosnippet>185</a>    state: <span class="kw-2">&amp;</span>State&lt;<span class="lifetime">'_</span>, AppState&gt;,
-<a href=#186 id=186 data-nosnippet>186</a>    services: Vec&lt;String&gt;,
-<a href=#187 id=187 data-nosnippet>187</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
-<a href=#188 id=188 data-nosnippet>188</a>    <span class="kw">let </span>conn = state.games_db.lock().map_err(|e| e.to_string())<span class="question-mark">?</span>;
-<a href=#189 id=189 data-nosnippet>189</a>
-<a href=#190 id=190 data-nosnippet>190</a>    <span class="comment">// Reseta todos para disabled
-<a href=#191 id=191 data-nosnippet>191</a>    </span>conn.execute(<span class="string">"UPDATE subscriptions SET enabled = 0"</span>, [])
-<a href=#192 id=192 data-nosnippet>192</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
-<a href=#193 id=193 data-nosnippet>193</a>
-<a href=#194 id=194 data-nosnippet>194</a>    <span class="comment">// Habilita os selecionados (upsert)
-<a href=#195 id=195 data-nosnippet>195</a>    </span><span class="kw">for </span>service <span class="kw">in </span>services {
-<a href=#196 id=196 data-nosnippet>196</a>        conn.execute(
-<a href=#197 id=197 data-nosnippet>197</a>            <span class="string">"INSERT INTO subscriptions (service, enabled)
-<a href=#198 id=198 data-nosnippet>198</a>             VALUES (?1, 1)
-<a href=#199 id=199 data-nosnippet>199</a>             ON CONFLICT(service) DO UPDATE SET enabled = 1"</span>,
-<a href=#200 id=200 data-nosnippet>200</a>            <span class="macro">params!</span>[service],
-<a href=#201 id=201 data-nosnippet>201</a>        )
-<a href=#202 id=202 data-nosnippet>202</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
-<a href=#203 id=203 data-nosnippet>203</a>    }
-<a href=#204 id=204 data-nosnippet>204</a>
-<a href=#205 id=205 data-nosnippet>205</a>    <span class="prelude-val">Ok</span>(())
-<a href=#206 id=206 data-nosnippet>206</a>}
+<a href=#168 id=168 data-nosnippet>168</a><span class="doccomment">/// Obtém a lista de serviços assinados pelo usuário (Amazon Luna, Game Pass, EA Play, Ubisoft+)
+<a href=#169 id=169 data-nosnippet>169</a></span><span class="kw">pub fn </span>get_enabled_services(state: <span class="kw-2">&amp;</span>State&lt;<span class="lifetime">'_</span>, AppState&gt;) -&gt; <span class="prelude-ty">Result</span>&lt;Vec&lt;String&gt;, String&gt; {
+<a href=#170 id=170 data-nosnippet>170</a>    <span class="kw">let </span>conn = state.games_db.lock().map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#171 id=171 data-nosnippet>171</a>    <span class="kw">let </span><span class="kw-2">mut </span>stmt = conn
+<a href=#172 id=172 data-nosnippet>172</a>        .prepare(<span class="string">"SELECT service FROM subscriptions WHERE enabled = 1"</span>)
+<a href=#173 id=173 data-nosnippet>173</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#174 id=174 data-nosnippet>174</a>
+<a href=#175 id=175 data-nosnippet>175</a>    <span class="kw">let </span>services = stmt
+<a href=#176 id=176 data-nosnippet>176</a>        .query_map([], |row| row.get::&lt;<span class="kw">_</span>, String&gt;(<span class="number">0</span>))
+<a href=#177 id=177 data-nosnippet>177</a>        .map_err(|e| e.to_string())<span class="question-mark">?
+<a href=#178 id=178 data-nosnippet>178</a>        </span>.filter_map(|r| r.ok())
+<a href=#179 id=179 data-nosnippet>179</a>        .collect();
+<a href=#180 id=180 data-nosnippet>180</a>
+<a href=#181 id=181 data-nosnippet>181</a>    <span class="prelude-val">Ok</span>(services)
+<a href=#182 id=182 data-nosnippet>182</a>}
+<a href=#183 id=183 data-nosnippet>183</a>
+<a href=#184 id=184 data-nosnippet>184</a><span class="doccomment">/// Salva quais serviços o usuário assina
+<a href=#185 id=185 data-nosnippet>185</a></span><span class="kw">pub fn </span>set_enabled_services(
+<a href=#186 id=186 data-nosnippet>186</a>    state: <span class="kw-2">&amp;</span>State&lt;<span class="lifetime">'_</span>, AppState&gt;,
+<a href=#187 id=187 data-nosnippet>187</a>    services: Vec&lt;String&gt;,
+<a href=#188 id=188 data-nosnippet>188</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), String&gt; {
+<a href=#189 id=189 data-nosnippet>189</a>    <span class="kw">let </span>conn = state.games_db.lock().map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#190 id=190 data-nosnippet>190</a>
+<a href=#191 id=191 data-nosnippet>191</a>    <span class="comment">// Reseta todos para disabled
+<a href=#192 id=192 data-nosnippet>192</a>    </span>conn.execute(<span class="string">"UPDATE subscriptions SET enabled = 0"</span>, [])
+<a href=#193 id=193 data-nosnippet>193</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#194 id=194 data-nosnippet>194</a>
+<a href=#195 id=195 data-nosnippet>195</a>    <span class="comment">// Habilita os selecionados (upsert)
+<a href=#196 id=196 data-nosnippet>196</a>    </span><span class="kw">for </span>service <span class="kw">in </span>services {
+<a href=#197 id=197 data-nosnippet>197</a>        conn.execute(
+<a href=#198 id=198 data-nosnippet>198</a>            <span class="string">"INSERT INTO subscriptions (service, enabled)
+<a href=#199 id=199 data-nosnippet>199</a>             VALUES (?1, 1)
+<a href=#200 id=200 data-nosnippet>200</a>             ON CONFLICT(service) DO UPDATE SET enabled = 1"</span>,
+<a href=#201 id=201 data-nosnippet>201</a>            <span class="macro">params!</span>[service],
+<a href=#202 id=202 data-nosnippet>202</a>        )
+<a href=#203 id=203 data-nosnippet>203</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#204 id=204 data-nosnippet>204</a>    }
+<a href=#205 id=205 data-nosnippet>205</a>
+<a href=#206 id=206 data-nosnippet>206</a>    <span class="prelude-val">Ok</span>(())
+<a href=#207 id=207 data-nosnippet>207</a>}
 </code></pre></div></section></main></body></html>

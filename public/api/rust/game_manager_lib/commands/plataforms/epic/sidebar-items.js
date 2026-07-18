@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["import_epic_games"]};
+window.SIDEBAR_ITEMS = {"fn":["epic_is_authenticated","epic_login","epic_logout","import_epic_games"]};
