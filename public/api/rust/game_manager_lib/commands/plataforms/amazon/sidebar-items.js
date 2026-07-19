@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["amazon_is_authenticated","amazon_login","amazon_logout","import_amazon_games"]};

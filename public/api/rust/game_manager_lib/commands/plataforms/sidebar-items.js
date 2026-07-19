@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["battle_net","core","ea","epic","gog","heroic","legacy","scanner","steam","ubisoft"]};
+window.SIDEBAR_ITEMS = {"mod":["amazon","battle_net","core","ea","epic","gog","heroic","legacy","scanner","steam","ubisoft"]};
