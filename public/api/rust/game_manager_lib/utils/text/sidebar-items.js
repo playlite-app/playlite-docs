@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["is_likely_non_base_game","normalize_for_matching","strip_edition_suffix","strip_trademark_symbols"]};

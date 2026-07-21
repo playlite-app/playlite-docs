@@ -11,8 +11,8 @@
 <a href=#11 id=11 data-nosnippet>11</a>
 <a href=#12 id=12 data-nosnippet>12</a></span><span class="kw">use </span><span class="kw">super</span>::enrichment::{save_game_details, ProcessedGameDetails};
 <a href=#13 id=13 data-nosnippet>13</a><span class="kw">use </span><span class="kw">super</span>::shared::{
-<a href=#14 id=14 data-nosnippet>14</a>    extract_steam_id_from_url, fetch_rawg_metadata_fresh, fetch_steam_playtime,
-<a href=#15 id=15 data-nosnippet>15</a>    fetch_steam_reviews, fetch_steam_store_data, find_steam_id_in_links, EnrichProgress,
+<a href=#14 id=14 data-nosnippet>14</a>    fetch_rawg_metadata_fresh, fetch_steam_playtime, fetch_steam_reviews, fetch_steam_store_data,
+<a href=#15 id=15 data-nosnippet>15</a>    resolve_steam_app_id, EnrichProgress,
 <a href=#16 id=16 data-nosnippet>16</a>};
 <a href=#17 id=17 data-nosnippet>17</a><span class="kw">use </span><span class="kw">crate</span>::constants::{RAWG_RATE_LIMIT_MS, RAWG_REQUISITIONS_PER_BATCH};
 <a href=#18 id=18 data-nosnippet>18</a><span class="kw">use </span><span class="kw">crate</span>::database;
@@ -188,203 +188,181 @@
 <a href=#188 id=188 data-nosnippet>188</a>                            <span class="kw">let </span><span class="kw-2">mut </span>links_map: HashMap&lt;String, String&gt; = HashMap::new();
 <a href=#189 id=189 data-nosnippet>189</a>                            <span class="kw">let </span><span class="kw-2">mut </span>found_raw_tags: Vec&lt;String&gt; = Vec::new();
 <a href=#190 id=190 data-nosnippet>190</a>
-<a href=#191 id=191 data-nosnippet>191</a>                            <span class="kw">let </span><span class="kw-2">mut </span>target_steam_id = <span class="kw">if </span>platform.to_lowercase() == <span class="string">"steam" </span>{
-<a href=#192 id=192 data-nosnippet>192</a>                                platform_game_id.clone()
-<a href=#193 id=193 data-nosnippet>193</a>                            } <span class="kw">else </span>{
-<a href=#194 id=194 data-nosnippet>194</a>                                <span class="prelude-val">None
-<a href=#195 id=195 data-nosnippet>195</a>                            </span>};
-<a href=#196 id=196 data-nosnippet>196</a>
-<a href=#197 id=197 data-nosnippet>197</a>                            <span class="comment">// 2a. Busca na RAWG ignorando o cache
-<a href=#198 id=198 data-nosnippet>198</a>                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(rawg_det) =
-<a href=#199 id=199 data-nosnippet>199</a>                                fetch_rawg_metadata_fresh(<span class="kw-2">&amp;</span>api_key, <span class="kw-2">&amp;</span>name, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
-<a href=#200 id=200 data-nosnippet>200</a>                            </span>{
-<a href=#201 id=201 data-nosnippet>201</a>                                found_raw_tags =
-<a href=#202 id=202 data-nosnippet>202</a>                                    rawg_det.tags.iter().map(|t| t.slug.clone()).collect();
-<a href=#203 id=203 data-nosnippet>203</a>                                <span class="kw">let </span>raw_tag_slugs: Vec&lt;String&gt; =
-<a href=#204 id=204 data-nosnippet>204</a>                                    rawg_det.tags.iter().map(|t| t.slug.clone()).collect();
-<a href=#205 id=205 data-nosnippet>205</a>
-<a href=#206 id=206 data-nosnippet>206</a>                                details.description_raw = rawg_det.description_raw;
-<a href=#207 id=207 data-nosnippet>207</a>                                details.release_date = rawg_det.released;
-<a href=#208 id=208 data-nosnippet>208</a>                                details.genres = rawg_det
-<a href=#209 id=209 data-nosnippet>209</a>                                    .genres
-<a href=#210 id=210 data-nosnippet>210</a>                                    .iter()
-<a href=#211 id=211 data-nosnippet>211</a>                                    .map(|g| g.name.clone())
-<a href=#212 id=212 data-nosnippet>212</a>                                    .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
-<a href=#213 id=213 data-nosnippet>213</a>                                    .join(<span class="string">", "</span>);
-<a href=#214 id=214 data-nosnippet>214</a>                                details.tags = <span class="kw">crate</span>::services::tags::classify_and_sort_tags(
-<a href=#215 id=215 data-nosnippet>215</a>                                    raw_tag_slugs,
-<a href=#216 id=216 data-nosnippet>216</a>                                    <span class="number">10</span>,
-<a href=#217 id=217 data-nosnippet>217</a>                                );
-<a href=#218 id=218 data-nosnippet>218</a>                                details.developer =
-<a href=#219 id=219 data-nosnippet>219</a>                                    rawg_det.developers.first().map(|d| d.name.clone());
-<a href=#220 id=220 data-nosnippet>220</a>                                details.publisher =
-<a href=#221 id=221 data-nosnippet>221</a>                                    rawg_det.publishers.first().map(|p| p.name.clone());
-<a href=#222 id=222 data-nosnippet>222</a>                                details.critic_score = rawg_det.metacritic;
-<a href=#223 id=223 data-nosnippet>223</a>                                details.background_image = rawg_det.background_image;
-<a href=#224 id=224 data-nosnippet>224</a>                                details.esrb_rating =
-<a href=#225 id=225 data-nosnippet>225</a>                                    rawg_det.esrb_rating.as_ref().map(|r| r.name.clone());
-<a href=#226 id=226 data-nosnippet>226</a>
-<a href=#227 id=227 data-nosnippet>227</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(url) = <span class="kw-2">&amp;</span>rawg_det.website {
-<a href=#228 id=228 data-nosnippet>228</a>                                    links_map.insert(<span class="string">"website"</span>.to_string(), url.clone());
-<a href=#229 id=229 data-nosnippet>229</a>                                }
-<a href=#230 id=230 data-nosnippet>230</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(url) = <span class="kw-2">&amp;</span>rawg_det.reddit_url {
-<a href=#231 id=231 data-nosnippet>231</a>                                    links_map.insert(<span class="string">"reddit"</span>.to_string(), url.clone());
-<a href=#232 id=232 data-nosnippet>232</a>                                }
-<a href=#233 id=233 data-nosnippet>233</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(url) = <span class="kw-2">&amp;</span>rawg_det.metacritic_url {
-<a href=#234 id=234 data-nosnippet>234</a>                                    links_map.insert(<span class="string">"metacritic"</span>.to_string(), url.clone());
-<a href=#235 id=235 data-nosnippet>235</a>                                }
-<a href=#236 id=236 data-nosnippet>236</a>                                links_map.insert(
-<a href=#237 id=237 data-nosnippet>237</a>                                    <span class="string">"rawg"</span>.to_string(),
-<a href=#238 id=238 data-nosnippet>238</a>                                    <span class="macro">format!</span>(<span class="string">"https://rawg.io/games/{}"</span>, rawg_det.id),
-<a href=#239 id=239 data-nosnippet>239</a>                                );
-<a href=#240 id=240 data-nosnippet>240</a>
-<a href=#241 id=241 data-nosnippet>241</a>                                <span class="kw">if </span>target_steam_id.is_none() {
-<a href=#242 id=242 data-nosnippet>242</a>                                    <span class="kw">for </span>store_data <span class="kw">in </span><span class="kw-2">&amp;</span>rawg_det.stores {
-<a href=#243 id=243 data-nosnippet>243</a>                                        <span class="kw">if </span>store_data.store.slug == <span class="string">"steam" </span>{
-<a href=#244 id=244 data-nosnippet>244</a>                                            <span class="kw">if let </span><span class="prelude-val">Some</span>(id) =
-<a href=#245 id=245 data-nosnippet>245</a>                                                extract_steam_id_from_url(<span class="kw-2">&amp;</span>store_data.url)
-<a href=#246 id=246 data-nosnippet>246</a>                                            {
-<a href=#247 id=247 data-nosnippet>247</a>                                                target_steam_id = <span class="prelude-val">Some</span>(id);
-<a href=#248 id=248 data-nosnippet>248</a>                                                links_map.insert(
-<a href=#249 id=249 data-nosnippet>249</a>                                                    <span class="string">"steam"</span>.to_string(),
-<a href=#250 id=250 data-nosnippet>250</a>                                                    store_data.url.clone(),
-<a href=#251 id=251 data-nosnippet>251</a>                                                );
-<a href=#252 id=252 data-nosnippet>252</a>                                            }
-<a href=#253 id=253 data-nosnippet>253</a>                                        }
-<a href=#254 id=254 data-nosnippet>254</a>                                    }
+<a href=#191 id=191 data-nosnippet>191</a>                            <span class="comment">// 1. Resolução do Steam App ID — cobre tanto jogos Steam (direto do platform_game_id) quanto
+<a href=#192 id=192 data-nosnippet>192</a>                            // jogos de outras plataformas (via busca por nome na Steam Store Search), com cache de tentativas sem sucesso.
+<a href=#193 id=193 data-nosnippet>193</a>                            </span><span class="kw">let </span>target_steam_id =
+<a href=#194 id=194 data-nosnippet>194</a>                                resolve_steam_app_id(<span class="kw-2">&amp;</span>name, <span class="kw-2">&amp;</span>platform, platform_game_id.as_deref(), <span class="kw-2">&amp;</span>cache_conn)
+<a href=#195 id=195 data-nosnippet>195</a>                                    .<span class="kw">await
+<a href=#196 id=196 data-nosnippet>196</a>                                    </span>.map(|resolution| resolution.app_id);
+<a href=#197 id=197 data-nosnippet>197</a>
+<a href=#198 id=198 data-nosnippet>198</a>                            <span class="comment">// 2a. Busca na RAWG ignorando o cache
+<a href=#199 id=199 data-nosnippet>199</a>                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(rawg_det) =
+<a href=#200 id=200 data-nosnippet>200</a>                                fetch_rawg_metadata_fresh(<span class="kw-2">&amp;</span>api_key, <span class="kw-2">&amp;</span>name, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
+<a href=#201 id=201 data-nosnippet>201</a>                            </span>{
+<a href=#202 id=202 data-nosnippet>202</a>                                found_raw_tags =
+<a href=#203 id=203 data-nosnippet>203</a>                                    rawg_det.tags.iter().map(|t| t.slug.clone()).collect();
+<a href=#204 id=204 data-nosnippet>204</a>                                <span class="kw">let </span>raw_tag_slugs: Vec&lt;String&gt; =
+<a href=#205 id=205 data-nosnippet>205</a>                                    rawg_det.tags.iter().map(|t| t.slug.clone()).collect();
+<a href=#206 id=206 data-nosnippet>206</a>
+<a href=#207 id=207 data-nosnippet>207</a>                                details.description_raw = rawg_det.description_raw;
+<a href=#208 id=208 data-nosnippet>208</a>                                details.release_date = rawg_det.released;
+<a href=#209 id=209 data-nosnippet>209</a>                                details.genres = rawg_det
+<a href=#210 id=210 data-nosnippet>210</a>                                    .genres
+<a href=#211 id=211 data-nosnippet>211</a>                                    .iter()
+<a href=#212 id=212 data-nosnippet>212</a>                                    .map(|g| g.name.clone())
+<a href=#213 id=213 data-nosnippet>213</a>                                    .collect::&lt;Vec&lt;<span class="kw">_</span>&gt;&gt;()
+<a href=#214 id=214 data-nosnippet>214</a>                                    .join(<span class="string">", "</span>);
+<a href=#215 id=215 data-nosnippet>215</a>                                details.tags = <span class="kw">crate</span>::services::tags::classify_and_sort_tags(
+<a href=#216 id=216 data-nosnippet>216</a>                                    raw_tag_slugs,
+<a href=#217 id=217 data-nosnippet>217</a>                                    <span class="number">10</span>,
+<a href=#218 id=218 data-nosnippet>218</a>                                );
+<a href=#219 id=219 data-nosnippet>219</a>                                details.developer =
+<a href=#220 id=220 data-nosnippet>220</a>                                    rawg_det.developers.first().map(|d| d.name.clone());
+<a href=#221 id=221 data-nosnippet>221</a>                                details.publisher =
+<a href=#222 id=222 data-nosnippet>222</a>                                    rawg_det.publishers.first().map(|p| p.name.clone());
+<a href=#223 id=223 data-nosnippet>223</a>                                details.critic_score = rawg_det.metacritic;
+<a href=#224 id=224 data-nosnippet>224</a>                                details.background_image = rawg_det.background_image;
+<a href=#225 id=225 data-nosnippet>225</a>                                details.esrb_rating =
+<a href=#226 id=226 data-nosnippet>226</a>                                    rawg_det.esrb_rating.as_ref().map(|r| r.name.clone());
+<a href=#227 id=227 data-nosnippet>227</a>
+<a href=#228 id=228 data-nosnippet>228</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(url) = <span class="kw-2">&amp;</span>rawg_det.website {
+<a href=#229 id=229 data-nosnippet>229</a>                                    links_map.insert(<span class="string">"website"</span>.to_string(), url.clone());
+<a href=#230 id=230 data-nosnippet>230</a>                                }
+<a href=#231 id=231 data-nosnippet>231</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(url) = <span class="kw-2">&amp;</span>rawg_det.reddit_url {
+<a href=#232 id=232 data-nosnippet>232</a>                                    links_map.insert(<span class="string">"reddit"</span>.to_string(), url.clone());
+<a href=#233 id=233 data-nosnippet>233</a>                                }
+<a href=#234 id=234 data-nosnippet>234</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(url) = <span class="kw-2">&amp;</span>rawg_det.metacritic_url {
+<a href=#235 id=235 data-nosnippet>235</a>                                    links_map.insert(<span class="string">"metacritic"</span>.to_string(), url.clone());
+<a href=#236 id=236 data-nosnippet>236</a>                                }
+<a href=#237 id=237 data-nosnippet>237</a>                                links_map.insert(
+<a href=#238 id=238 data-nosnippet>238</a>                                    <span class="string">"rawg"</span>.to_string(),
+<a href=#239 id=239 data-nosnippet>239</a>                                    <span class="macro">format!</span>(<span class="string">"https://rawg.io/games/{}"</span>, rawg_det.id),
+<a href=#240 id=240 data-nosnippet>240</a>                                );
+<a href=#241 id=241 data-nosnippet>241</a>                            } <span class="kw">else </span>{
+<a href=#242 id=242 data-nosnippet>242</a>                                <span class="macro">warn!</span>(
+<a href=#243 id=243 data-nosnippet>243</a>                                    game = %name,
+<a href=#244 id=244 data-nosnippet>244</a>                                    <span class="string">"RAWG não retornou dados — jogo será ignorado nas próximas iterações"
+<a href=#245 id=245 data-nosnippet>245</a>                                </span>);
+<a href=#246 id=246 data-nosnippet>246</a>                            }
+<a href=#247 id=247 data-nosnippet>247</a>
+<a href=#248 id=248 data-nosnippet>248</a>                            <span class="comment">// 2b. Steam como fallback / complemento
+<a href=#249 id=249 data-nosnippet>249</a>                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(steam_id) = <span class="kw-2">&amp;</span>target_steam_id {
+<a href=#250 id=250 data-nosnippet>250</a>                                <span class="kw">if </span>!links_map.contains_key(<span class="string">"steam"</span>) {
+<a href=#251 id=251 data-nosnippet>251</a>                                    links_map.insert(
+<a href=#252 id=252 data-nosnippet>252</a>                                        <span class="string">"steam"</span>.to_string(),
+<a href=#253 id=253 data-nosnippet>253</a>                                        <span class="macro">format!</span>(<span class="string">"https://store.steampowered.com/app/{}"</span>, steam_id),
+<a href=#254 id=254 data-nosnippet>254</a>                                    );
 <a href=#255 id=255 data-nosnippet>255</a>                                }
-<a href=#256 id=256 data-nosnippet>256</a>
-<a href=#257 id=257 data-nosnippet>257</a>                                <span class="comment">// Fallback — Steam pode estar em outro campo (ex: website), não só listada como "store" própria pela RAWG.
-<a href=#258 id=258 data-nosnippet>258</a>                                </span><span class="kw">if </span>target_steam_id.is_none() {
-<a href=#259 id=259 data-nosnippet>259</a>                                    <span class="kw">if let </span><span class="prelude-val">Some</span>(steam_id) = find_steam_id_in_links(<span class="kw-2">&amp;</span>links_map) {
-<a href=#260 id=260 data-nosnippet>260</a>                                        target_steam_id = <span class="prelude-val">Some</span>(steam_id);
-<a href=#261 id=261 data-nosnippet>261</a>                                    }
-<a href=#262 id=262 data-nosnippet>262</a>                                }
-<a href=#263 id=263 data-nosnippet>263</a>                            } <span class="kw">else </span>{
-<a href=#264 id=264 data-nosnippet>264</a>                                <span class="macro">warn!</span>(
-<a href=#265 id=265 data-nosnippet>265</a>                                    game = %name,
-<a href=#266 id=266 data-nosnippet>266</a>                                    <span class="string">"RAWG não retornou dados — jogo será ignorado nas próximas iterações"
-<a href=#267 id=267 data-nosnippet>267</a>                                </span>);
-<a href=#268 id=268 data-nosnippet>268</a>                            }
-<a href=#269 id=269 data-nosnippet>269</a>
-<a href=#270 id=270 data-nosnippet>270</a>                            <span class="comment">// 2b. Steam como fallback / complemento
-<a href=#271 id=271 data-nosnippet>271</a>                            </span><span class="kw">if let </span><span class="prelude-val">Some</span>(steam_id) = <span class="kw-2">&amp;</span>target_steam_id {
-<a href=#272 id=272 data-nosnippet>272</a>                                <span class="kw">if </span>!links_map.contains_key(<span class="string">"steam"</span>) {
-<a href=#273 id=273 data-nosnippet>273</a>                                    links_map.insert(
-<a href=#274 id=274 data-nosnippet>274</a>                                        <span class="string">"steam"</span>.to_string(),
-<a href=#275 id=275 data-nosnippet>275</a>                                        <span class="macro">format!</span>(<span class="string">"https://store.steampowered.com/app/{}"</span>, steam_id),
-<a href=#276 id=276 data-nosnippet>276</a>                                    );
+<a href=#256 id=256 data-nosnippet>256</a>                                details.steam_app_id = <span class="prelude-val">Some</span>(steam_id.clone());
+<a href=#257 id=257 data-nosnippet>257</a>
+<a href=#258 id=258 data-nosnippet>258</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(store_data) =
+<a href=#259 id=259 data-nosnippet>259</a>                                    fetch_steam_store_data(steam_id, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
+<a href=#260 id=260 data-nosnippet>260</a>                                </span>{
+<a href=#261 id=261 data-nosnippet>261</a>                                    <span class="kw">let </span>(detected_adult, flags) =
+<a href=#262 id=262 data-nosnippet>262</a>                                        steam_api::detect_adult_content(<span class="kw-2">&amp;</span>store_data);
+<a href=#263 id=263 data-nosnippet>263</a>                                    details.is_adult = detected_adult;
+<a href=#264 id=264 data-nosnippet>264</a>                                    <span class="kw">if </span>!flags.is_empty() {
+<a href=#265 id=265 data-nosnippet>265</a>                                        details.adult_tags = serde_json::to_string(<span class="kw-2">&amp;</span>flags).ok();
+<a href=#266 id=266 data-nosnippet>266</a>                                    }
+<a href=#267 id=267 data-nosnippet>267</a>                                    <span class="kw">if </span>details.description_raw.is_none() {
+<a href=#268 id=268 data-nosnippet>268</a>                                        details.description_raw =
+<a href=#269 id=269 data-nosnippet>269</a>                                            <span class="prelude-val">Some</span>(store_data.short_description);
+<a href=#270 id=270 data-nosnippet>270</a>                                    }
+<a href=#271 id=271 data-nosnippet>271</a>                                    <span class="kw">if </span>details.release_date.is_none() {
+<a href=#272 id=272 data-nosnippet>272</a>                                        details.release_date = store_data.release_date;
+<a href=#273 id=273 data-nosnippet>273</a>                                    }
+<a href=#274 id=274 data-nosnippet>274</a>                                    <span class="kw">if </span>details.background_image.is_none() {
+<a href=#275 id=275 data-nosnippet>275</a>                                        details.background_image = <span class="prelude-val">Some</span>(store_data.header_image);
+<a href=#276 id=276 data-nosnippet>276</a>                                    }
 <a href=#277 id=277 data-nosnippet>277</a>                                }
-<a href=#278 id=278 data-nosnippet>278</a>                                details.steam_app_id = <span class="prelude-val">Some</span>(steam_id.clone());
-<a href=#279 id=279 data-nosnippet>279</a>
-<a href=#280 id=280 data-nosnippet>280</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(store_data) =
-<a href=#281 id=281 data-nosnippet>281</a>                                    fetch_steam_store_data(steam_id, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
-<a href=#282 id=282 data-nosnippet>282</a>                                </span>{
-<a href=#283 id=283 data-nosnippet>283</a>                                    <span class="kw">let </span>(detected_adult, flags) =
-<a href=#284 id=284 data-nosnippet>284</a>                                        steam_api::detect_adult_content(<span class="kw-2">&amp;</span>store_data);
-<a href=#285 id=285 data-nosnippet>285</a>                                    details.is_adult = detected_adult;
-<a href=#286 id=286 data-nosnippet>286</a>                                    <span class="kw">if </span>!flags.is_empty() {
-<a href=#287 id=287 data-nosnippet>287</a>                                        details.adult_tags = serde_json::to_string(<span class="kw-2">&amp;</span>flags).ok();
-<a href=#288 id=288 data-nosnippet>288</a>                                    }
-<a href=#289 id=289 data-nosnippet>289</a>                                    <span class="kw">if </span>details.description_raw.is_none() {
-<a href=#290 id=290 data-nosnippet>290</a>                                        details.description_raw =
-<a href=#291 id=291 data-nosnippet>291</a>                                            <span class="prelude-val">Some</span>(store_data.short_description);
-<a href=#292 id=292 data-nosnippet>292</a>                                    }
-<a href=#293 id=293 data-nosnippet>293</a>                                    <span class="kw">if </span>details.release_date.is_none() {
-<a href=#294 id=294 data-nosnippet>294</a>                                        details.release_date = store_data.release_date;
-<a href=#295 id=295 data-nosnippet>295</a>                                    }
-<a href=#296 id=296 data-nosnippet>296</a>                                    <span class="kw">if </span>details.background_image.is_none() {
-<a href=#297 id=297 data-nosnippet>297</a>                                        details.background_image = <span class="prelude-val">Some</span>(store_data.header_image);
-<a href=#298 id=298 data-nosnippet>298</a>                                    }
-<a href=#299 id=299 data-nosnippet>299</a>                                }
-<a href=#300 id=300 data-nosnippet>300</a>
-<a href=#301 id=301 data-nosnippet>301</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(reviews) =
-<a href=#302 id=302 data-nosnippet>302</a>                                    fetch_steam_reviews(steam_id, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
-<a href=#303 id=303 data-nosnippet>303</a>                                </span>{
-<a href=#304 id=304 data-nosnippet>304</a>                                    details.steam_review_label = <span class="prelude-val">Some</span>(reviews.review_score_desc);
-<a href=#305 id=305 data-nosnippet>305</a>                                    details.steam_review_count = <span class="prelude-val">Some</span>(reviews.total_reviews <span class="kw">as </span>i32);
-<a href=#306 id=306 data-nosnippet>306</a>                                    <span class="kw">let </span>total = reviews.total_positive + reviews.total_negative;
-<a href=#307 id=307 data-nosnippet>307</a>                                    <span class="kw">if </span>total &gt; <span class="number">0 </span>{
-<a href=#308 id=308 data-nosnippet>308</a>                                        details.steam_review_score = <span class="prelude-val">Some</span>(
-<a href=#309 id=309 data-nosnippet>309</a>                                            (reviews.total_positive <span class="kw">as </span>f32 / total <span class="kw">as </span>f32) * <span class="number">100.0</span>,
-<a href=#310 id=310 data-nosnippet>310</a>                                        );
-<a href=#311 id=311 data-nosnippet>311</a>                                    }
-<a href=#312 id=312 data-nosnippet>312</a>                                    details.steam_review_updated_at =
-<a href=#313 id=313 data-nosnippet>313</a>                                        <span class="prelude-val">Some</span>(chrono::Utc::now().to_rfc3339());
-<a href=#314 id=314 data-nosnippet>314</a>                                }
-<a href=#315 id=315 data-nosnippet>315</a>
-<a href=#316 id=316 data-nosnippet>316</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(hours) =
-<a href=#317 id=317 data-nosnippet>317</a>                                    fetch_steam_playtime(steam_id, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
-<a href=#318 id=318 data-nosnippet>318</a>                                </span>{
-<a href=#319 id=319 data-nosnippet>319</a>                                    details.median_playtime = <span class="prelude-val">Some</span>(hours <span class="kw">as </span>i32);
-<a href=#320 id=320 data-nosnippet>320</a>                                    <span class="kw">let </span>genre_list: Vec&lt;String&gt; = details
-<a href=#321 id=321 data-nosnippet>321</a>                                        .genres
-<a href=#322 id=322 data-nosnippet>322</a>                                        .split(<span class="string">','</span>)
-<a href=#323 id=323 data-nosnippet>323</a>                                        .map(|s| s.trim().to_lowercase())
-<a href=#324 id=324 data-nosnippet>324</a>                                        .collect();
-<a href=#325 id=325 data-nosnippet>325</a>                                    <span class="kw">if let </span><span class="prelude-val">Some</span>(estimated) = playtime::estimate_playtime(
-<a href=#326 id=326 data-nosnippet>326</a>                                        <span class="prelude-val">Some</span>(hours),
-<a href=#327 id=327 data-nosnippet>327</a>                                        <span class="kw-2">&amp;</span>genre_list,
-<a href=#328 id=328 data-nosnippet>328</a>                                        <span class="kw-2">&amp;</span>details.tags,
-<a href=#329 id=329 data-nosnippet>329</a>                                    ) {
-<a href=#330 id=330 data-nosnippet>330</a>                                        details.estimated_playtime = <span class="prelude-val">Some</span>(estimated <span class="kw">as </span>f32);
-<a href=#331 id=331 data-nosnippet>331</a>                                    }
-<a href=#332 id=332 data-nosnippet>332</a>                                }
-<a href=#333 id=333 data-nosnippet>333</a>                            }
-<a href=#334 id=334 data-nosnippet>334</a>
-<a href=#335 id=335 data-nosnippet>335</a>                            <span class="kw">if </span>!links_map.is_empty() {
-<a href=#336 id=336 data-nosnippet>336</a>                                details.external_links = serde_json::to_string(<span class="kw-2">&amp;</span>links_map).ok();
-<a href=#337 id=337 data-nosnippet>337</a>                            }
-<a href=#338 id=338 data-nosnippet>338</a>
-<a href=#339 id=339 data-nosnippet>339</a>                            (details, found_raw_tags)
-<a href=#340 id=340 data-nosnippet>340</a>                        })
-<a href=#341 id=341 data-nosnippet>341</a>                    })
-<a href=#342 id=342 data-nosnippet>342</a>                };
-<a href=#343 id=343 data-nosnippet>343</a>
-<a href=#344 id=344 data-nosnippet>344</a>                <span class="kw">for </span>tag <span class="kw">in </span>raw_tags {
-<a href=#345 id=345 data-nosnippet>345</a>                    all_session_tags.insert(tag);
-<a href=#346 id=346 data-nosnippet>346</a>                }
-<a href=#347 id=347 data-nosnippet>347</a>                batch_results.push((name.clone(), processed_data));
-<a href=#348 id=348 data-nosnippet>348</a>            }
-<a href=#349 id=349 data-nosnippet>349</a>
-<a href=#350 id=350 data-nosnippet>350</a>            <span class="comment">// 3. Persiste o batch numa única transação
-<a href=#351 id=351 data-nosnippet>351</a>            // save_game_details usa COALESCE → nunca sobrescreve campos existentes
-<a href=#352 id=352 data-nosnippet>352</a>            </span><span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>conn) = state.games_db.lock() {
-<a href=#353 id=353 data-nosnippet>353</a>                <span class="kw">match </span>conn.transaction() {
-<a href=#354 id=354 data-nosnippet>354</a>                    <span class="prelude-val">Ok</span>(tx) =&gt; {
-<a href=#355 id=355 data-nosnippet>355</a>                        <span class="kw">let </span><span class="kw-2">mut </span>success_count = <span class="number">0</span>;
-<a href=#356 id=356 data-nosnippet>356</a>                        <span class="kw">let </span><span class="kw-2">mut </span>error_count = <span class="number">0</span>;
-<a href=#357 id=357 data-nosnippet>357</a>
-<a href=#358 id=358 data-nosnippet>358</a>                        <span class="kw">for </span>(game_name, processed_data) <span class="kw">in </span>batch_results {
-<a href=#359 id=359 data-nosnippet>359</a>                            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = save_game_details(<span class="kw-2">&amp;</span>tx, processed_data) {
-<a href=#360 id=360 data-nosnippet>360</a>                                <span class="macro">warn!</span>(<span class="string">"fill_missing: erro ao salvar {}: {}"</span>, game_name, e);
-<a href=#361 id=361 data-nosnippet>361</a>                                error_count += <span class="number">1</span>;
-<a href=#362 id=362 data-nosnippet>362</a>                            } <span class="kw">else </span>{
-<a href=#363 id=363 data-nosnippet>363</a>                                success_count += <span class="number">1</span>;
-<a href=#364 id=364 data-nosnippet>364</a>                            }
-<a href=#365 id=365 data-nosnippet>365</a>                        }
-<a href=#366 id=366 data-nosnippet>366</a>
-<a href=#367 id=367 data-nosnippet>367</a>                        <span class="kw">match </span>tx.commit() {
-<a href=#368 id=368 data-nosnippet>368</a>                            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">info!</span>(
-<a href=#369 id=369 data-nosnippet>369</a>                                <span class="string">"fill_missing batch: {} ok, {} erros"</span>,
-<a href=#370 id=370 data-nosnippet>370</a>                                success_count, error_count
-<a href=#371 id=371 data-nosnippet>371</a>                            ),
-<a href=#372 id=372 data-nosnippet>372</a>                            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">"fill_missing: commit falhou: {}"</span>, e),
-<a href=#373 id=373 data-nosnippet>373</a>                        }
-<a href=#374 id=374 data-nosnippet>374</a>                    }
-<a href=#375 id=375 data-nosnippet>375</a>                    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">"fill_missing: transação falhou: {}"</span>, e),
-<a href=#376 id=376 data-nosnippet>376</a>                }
-<a href=#377 id=377 data-nosnippet>377</a>            }
-<a href=#378 id=378 data-nosnippet>378</a>
-<a href=#379 id=379 data-nosnippet>379</a>            <span class="comment">// 4. Rate limit entre batches
-<a href=#380 id=380 data-nosnippet>380</a>            </span>sleep(Duration::from_millis(RAWG_RATE_LIMIT_MS)).<span class="kw">await</span>;
-<a href=#381 id=381 data-nosnippet>381</a>        }
-<a href=#382 id=382 data-nosnippet>382</a>
-<a href=#383 id=383 data-nosnippet>383</a>        <span class="kw">let _ </span>= <span class="kw">crate</span>::services::tags::generate_analysis_report(<span class="kw-2">&amp;</span>app_handle, all_session_tags);
-<a href=#384 id=384 data-nosnippet>384</a>        <span class="kw">let _ </span>= app_handle.emit(<span class="string">"enrich_complete"</span>, <span class="string">"Campos vazios preenchidos!"</span>);
-<a href=#385 id=385 data-nosnippet>385</a>        <span class="macro">info!</span>(<span class="string">"fill_missing_metadata concluído."</span>);
-<a href=#386 id=386 data-nosnippet>386</a>    });
-<a href=#387 id=387 data-nosnippet>387</a>
-<a href=#388 id=388 data-nosnippet>388</a>    <span class="prelude-val">Ok</span>(())
-<a href=#389 id=389 data-nosnippet>389</a>}
+<a href=#278 id=278 data-nosnippet>278</a>
+<a href=#279 id=279 data-nosnippet>279</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(reviews) =
+<a href=#280 id=280 data-nosnippet>280</a>                                    fetch_steam_reviews(steam_id, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
+<a href=#281 id=281 data-nosnippet>281</a>                                </span>{
+<a href=#282 id=282 data-nosnippet>282</a>                                    details.steam_review_label = <span class="prelude-val">Some</span>(reviews.review_score_desc);
+<a href=#283 id=283 data-nosnippet>283</a>                                    details.steam_review_count = <span class="prelude-val">Some</span>(reviews.total_reviews <span class="kw">as </span>i32);
+<a href=#284 id=284 data-nosnippet>284</a>                                    <span class="kw">let </span>total = reviews.total_positive + reviews.total_negative;
+<a href=#285 id=285 data-nosnippet>285</a>                                    <span class="kw">if </span>total &gt; <span class="number">0 </span>{
+<a href=#286 id=286 data-nosnippet>286</a>                                        details.steam_review_score = <span class="prelude-val">Some</span>(
+<a href=#287 id=287 data-nosnippet>287</a>                                            (reviews.total_positive <span class="kw">as </span>f32 / total <span class="kw">as </span>f32) * <span class="number">100.0</span>,
+<a href=#288 id=288 data-nosnippet>288</a>                                        );
+<a href=#289 id=289 data-nosnippet>289</a>                                    }
+<a href=#290 id=290 data-nosnippet>290</a>                                    details.steam_review_updated_at =
+<a href=#291 id=291 data-nosnippet>291</a>                                        <span class="prelude-val">Some</span>(chrono::Utc::now().to_rfc3339());
+<a href=#292 id=292 data-nosnippet>292</a>                                }
+<a href=#293 id=293 data-nosnippet>293</a>
+<a href=#294 id=294 data-nosnippet>294</a>                                <span class="kw">if let </span><span class="prelude-val">Some</span>(hours) =
+<a href=#295 id=295 data-nosnippet>295</a>                                    fetch_steam_playtime(steam_id, <span class="kw-2">&amp;</span>cache_conn).<span class="kw">await
+<a href=#296 id=296 data-nosnippet>296</a>                                </span>{
+<a href=#297 id=297 data-nosnippet>297</a>                                    details.median_playtime = <span class="prelude-val">Some</span>(hours <span class="kw">as </span>i32);
+<a href=#298 id=298 data-nosnippet>298</a>                                    <span class="kw">let </span>genre_list: Vec&lt;String&gt; = details
+<a href=#299 id=299 data-nosnippet>299</a>                                        .genres
+<a href=#300 id=300 data-nosnippet>300</a>                                        .split(<span class="string">','</span>)
+<a href=#301 id=301 data-nosnippet>301</a>                                        .map(|s| s.trim().to_lowercase())
+<a href=#302 id=302 data-nosnippet>302</a>                                        .collect();
+<a href=#303 id=303 data-nosnippet>303</a>                                    <span class="kw">if let </span><span class="prelude-val">Some</span>(estimated) = playtime::estimate_playtime(
+<a href=#304 id=304 data-nosnippet>304</a>                                        <span class="prelude-val">Some</span>(hours),
+<a href=#305 id=305 data-nosnippet>305</a>                                        <span class="kw-2">&amp;</span>genre_list,
+<a href=#306 id=306 data-nosnippet>306</a>                                        <span class="kw-2">&amp;</span>details.tags,
+<a href=#307 id=307 data-nosnippet>307</a>                                    ) {
+<a href=#308 id=308 data-nosnippet>308</a>                                        details.estimated_playtime = <span class="prelude-val">Some</span>(estimated <span class="kw">as </span>f32);
+<a href=#309 id=309 data-nosnippet>309</a>                                    }
+<a href=#310 id=310 data-nosnippet>310</a>                                }
+<a href=#311 id=311 data-nosnippet>311</a>                            }
+<a href=#312 id=312 data-nosnippet>312</a>
+<a href=#313 id=313 data-nosnippet>313</a>                            <span class="kw">if </span>!links_map.is_empty() {
+<a href=#314 id=314 data-nosnippet>314</a>                                details.external_links = serde_json::to_string(<span class="kw-2">&amp;</span>links_map).ok();
+<a href=#315 id=315 data-nosnippet>315</a>                            }
+<a href=#316 id=316 data-nosnippet>316</a>
+<a href=#317 id=317 data-nosnippet>317</a>                            (details, found_raw_tags)
+<a href=#318 id=318 data-nosnippet>318</a>                        })
+<a href=#319 id=319 data-nosnippet>319</a>                    })
+<a href=#320 id=320 data-nosnippet>320</a>                };
+<a href=#321 id=321 data-nosnippet>321</a>
+<a href=#322 id=322 data-nosnippet>322</a>                <span class="kw">for </span>tag <span class="kw">in </span>raw_tags {
+<a href=#323 id=323 data-nosnippet>323</a>                    all_session_tags.insert(tag);
+<a href=#324 id=324 data-nosnippet>324</a>                }
+<a href=#325 id=325 data-nosnippet>325</a>                batch_results.push((name.clone(), processed_data));
+<a href=#326 id=326 data-nosnippet>326</a>            }
+<a href=#327 id=327 data-nosnippet>327</a>
+<a href=#328 id=328 data-nosnippet>328</a>            <span class="comment">// 3. Persiste o batch numa única transação
+<a href=#329 id=329 data-nosnippet>329</a>            // save_game_details usa COALESCE → nunca sobrescreve campos existentes
+<a href=#330 id=330 data-nosnippet>330</a>            </span><span class="kw">if let </span><span class="prelude-val">Ok</span>(<span class="kw-2">mut </span>conn) = state.games_db.lock() {
+<a href=#331 id=331 data-nosnippet>331</a>                <span class="kw">match </span>conn.transaction() {
+<a href=#332 id=332 data-nosnippet>332</a>                    <span class="prelude-val">Ok</span>(tx) =&gt; {
+<a href=#333 id=333 data-nosnippet>333</a>                        <span class="kw">let </span><span class="kw-2">mut </span>success_count = <span class="number">0</span>;
+<a href=#334 id=334 data-nosnippet>334</a>                        <span class="kw">let </span><span class="kw-2">mut </span>error_count = <span class="number">0</span>;
+<a href=#335 id=335 data-nosnippet>335</a>
+<a href=#336 id=336 data-nosnippet>336</a>                        <span class="kw">for </span>(game_name, processed_data) <span class="kw">in </span>batch_results {
+<a href=#337 id=337 data-nosnippet>337</a>                            <span class="kw">if let </span><span class="prelude-val">Err</span>(e) = save_game_details(<span class="kw-2">&amp;</span>tx, processed_data) {
+<a href=#338 id=338 data-nosnippet>338</a>                                <span class="macro">warn!</span>(<span class="string">"fill_missing: erro ao salvar {}: {}"</span>, game_name, e);
+<a href=#339 id=339 data-nosnippet>339</a>                                error_count += <span class="number">1</span>;
+<a href=#340 id=340 data-nosnippet>340</a>                            } <span class="kw">else </span>{
+<a href=#341 id=341 data-nosnippet>341</a>                                success_count += <span class="number">1</span>;
+<a href=#342 id=342 data-nosnippet>342</a>                            }
+<a href=#343 id=343 data-nosnippet>343</a>                        }
+<a href=#344 id=344 data-nosnippet>344</a>
+<a href=#345 id=345 data-nosnippet>345</a>                        <span class="kw">match </span>tx.commit() {
+<a href=#346 id=346 data-nosnippet>346</a>                            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="macro">info!</span>(
+<a href=#347 id=347 data-nosnippet>347</a>                                <span class="string">"fill_missing batch: {} ok, {} erros"</span>,
+<a href=#348 id=348 data-nosnippet>348</a>                                success_count, error_count
+<a href=#349 id=349 data-nosnippet>349</a>                            ),
+<a href=#350 id=350 data-nosnippet>350</a>                            <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">"fill_missing: commit falhou: {}"</span>, e),
+<a href=#351 id=351 data-nosnippet>351</a>                        }
+<a href=#352 id=352 data-nosnippet>352</a>                    }
+<a href=#353 id=353 data-nosnippet>353</a>                    <span class="prelude-val">Err</span>(e) =&gt; <span class="macro">warn!</span>(<span class="string">"fill_missing: transação falhou: {}"</span>, e),
+<a href=#354 id=354 data-nosnippet>354</a>                }
+<a href=#355 id=355 data-nosnippet>355</a>            }
+<a href=#356 id=356 data-nosnippet>356</a>
+<a href=#357 id=357 data-nosnippet>357</a>            <span class="comment">// 4. Rate limit entre batches
+<a href=#358 id=358 data-nosnippet>358</a>            </span>sleep(Duration::from_millis(RAWG_RATE_LIMIT_MS)).<span class="kw">await</span>;
+<a href=#359 id=359 data-nosnippet>359</a>        }
+<a href=#360 id=360 data-nosnippet>360</a>
+<a href=#361 id=361 data-nosnippet>361</a>        <span class="kw">let _ </span>= <span class="kw">crate</span>::services::tags::generate_analysis_report(<span class="kw-2">&amp;</span>app_handle, all_session_tags);
+<a href=#362 id=362 data-nosnippet>362</a>        <span class="kw">let _ </span>= app_handle.emit(<span class="string">"enrich_complete"</span>, <span class="string">"Campos vazios preenchidos!"</span>);
+<a href=#363 id=363 data-nosnippet>363</a>        <span class="macro">info!</span>(<span class="string">"fill_missing_metadata concluído."</span>);
+<a href=#364 id=364 data-nosnippet>364</a>    });
+<a href=#365 id=365 data-nosnippet>365</a>
+<a href=#366 id=366 data-nosnippet>366</a>    <span class="prelude-val">Ok</span>(())
+<a href=#367 id=367 data-nosnippet>367</a>}
 </code></pre></div></section></main></body></html>

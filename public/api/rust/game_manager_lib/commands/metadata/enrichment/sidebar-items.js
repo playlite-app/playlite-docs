@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["update_metadata"],"struct":["ImportSummary"]};
+window.SIDEBAR_ITEMS = {"fn":["enrich_newly_imported","update_metadata"],"struct":["ImportSummary"]};

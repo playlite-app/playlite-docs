@@ -13,14 +13,14 @@
 <a href=#13 id=13 data-nosnippet>13</a>};
 <a href=#14 id=14 data-nosnippet>14</a><span class="kw">use </span><span class="kw">crate</span>::utils::oauth::core::{generate_state, AuthCallbackResult};
 <a href=#15 id=15 data-nosnippet>15</a><span class="kw">use </span><span class="kw">crate</span>::utils::oauth::token_store::save_oauth_token;
-<a href=#16 id=16 data-nosnippet>16</a><span class="kw">use </span>async_trait::async_trait;
-<a href=#17 id=17 data-nosnippet>17</a><span class="kw">use </span>serde::Deserialize;
-<a href=#18 id=18 data-nosnippet>18</a><span class="kw">use </span>std::fs;
-<a href=#19 id=19 data-nosnippet>19</a><span class="kw">use </span>std::path::Path;
-<a href=#20 id=20 data-nosnippet>20</a><span class="kw">use </span>std::sync::mpsc;
-<a href=#21 id=21 data-nosnippet>21</a><span class="kw">use </span>std::time::Duration;
-<a href=#22 id=22 data-nosnippet>22</a><span class="kw">use </span>tauri::{AppHandle, WebviewUrl, WebviewWindowBuilder};
-<a href=#23 id=23 data-nosnippet>23</a>
+<a href=#16 id=16 data-nosnippet>16</a><span class="kw">use </span><span class="kw">crate</span>::utils::text::is_likely_non_base_game;
+<a href=#17 id=17 data-nosnippet>17</a><span class="kw">use </span>async_trait::async_trait;
+<a href=#18 id=18 data-nosnippet>18</a><span class="kw">use </span>serde::Deserialize;
+<a href=#19 id=19 data-nosnippet>19</a><span class="kw">use </span>std::fs;
+<a href=#20 id=20 data-nosnippet>20</a><span class="kw">use </span>std::path::Path;
+<a href=#21 id=21 data-nosnippet>21</a><span class="kw">use </span>std::sync::mpsc;
+<a href=#22 id=22 data-nosnippet>22</a><span class="kw">use </span>std::time::Duration;
+<a href=#23 id=23 data-nosnippet>23</a><span class="kw">use </span>tauri::{AppHandle, WebviewUrl, WebviewWindowBuilder};
 <a href=#24 id=24 data-nosnippet>24</a><span class="comment">// === STRUCTS ===
 <a href=#25 id=25 data-nosnippet>25</a>
 <a href=#26 id=26 data-nosnippet>26</a></span><span class="kw">pub struct </span>GogSource {
@@ -68,7 +68,7 @@
 <a href=#68 id=68 data-nosnippet>68</a>
 <a href=#69 id=69 data-nosnippet>69</a>        <span class="kw">let </span>games = products
 <a href=#70 id=70 data-nosnippet>70</a>            .into_iter()
-<a href=#71 id=71 data-nosnippet>71</a>            .filter(|p| !is_goodies_pack(<span class="kw-2">&amp;</span>p.title))
+<a href=#71 id=71 data-nosnippet>71</a>            .filter(|p| !is_likely_non_base_game(<span class="kw-2">&amp;</span>p.title))
 <a href=#72 id=72 data-nosnippet>72</a>            .map(|p| SourceGame {
 <a href=#73 id=73 data-nosnippet>73</a>                platform: <span class="string">"GOG"</span>.to_string(),
 <a href=#74 id=74 data-nosnippet>74</a>                platform_game_id: p.id.to_string(),
@@ -265,10 +265,4 @@
 <a href=#265 id=265 data-nosnippet>265</a>        }
 <a href=#266 id=266 data-nosnippet>266</a>    }
 <a href=#267 id=267 data-nosnippet>267</a>}
-<a href=#268 id=268 data-nosnippet>268</a>
-<a href=#269 id=269 data-nosnippet>269</a><span class="doccomment">/// Filtra pacotes de bônus/goodies, que a GOG lista como produtos próprios na loja mas não são jogos jogáveis (soundtracks, wallpapers, artbooks digitais).
-<a href=#270 id=270 data-nosnippet>270</a></span><span class="kw">fn </span>is_goodies_pack(title: <span class="kw-2">&amp;</span>str) -&gt; bool {
-<a href=#271 id=271 data-nosnippet>271</a>    <span class="kw">let </span>lower = title.to_lowercase();
-<a href=#272 id=272 data-nosnippet>272</a>    lower.contains(<span class="string">"goodie"</span>) <span class="comment">// cobre "goodie" e "goodies"
-<a href=#273 id=273 data-nosnippet>273</a></span>}
 </code></pre></div></section></main></body></html>

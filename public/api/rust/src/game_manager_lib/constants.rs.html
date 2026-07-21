@@ -13,8 +13,8 @@
 <a href=#13 id=13 data-nosnippet>13</a>    <span class="string">"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"</span>;
 <a href=#14 id=14 data-nosnippet>14</a><span class="kw">pub const </span>PCGW_API_BASE: <span class="kw-2">&amp;</span>str = <span class="string">"https://www.pcgamingwiki.com/w/api.php"</span>; <span class="comment">// Base da MediaWiki Action API do PCGamingWiki.
 <a href=#15 id=15 data-nosnippet>15</a>
-<a href=#16 id=16 data-nosnippet>16</a>// === RAWG METADATA ===
-<a href=#17 id=17 data-nosnippet>17</a></span><span class="kw">pub const </span>RAWG_NOT_FOUND_MARKER: <span class="kw-2">&amp;</span>str = <span class="string">"__RAWG_NOT_FOUND__"</span>;
+<a href=#16 id=16 data-nosnippet>16</a>// === METADATA ===
+<a href=#17 id=17 data-nosnippet>17</a></span><span class="kw">pub const </span>NOT_FOUND_MARKER: <span class="kw-2">&amp;</span>str = <span class="string">"__NOT_FOUND__"</span>;
 <a href=#18 id=18 data-nosnippet>18</a>
 <a href=#19 id=19 data-nosnippet>19</a><span class="comment">// === CAMINHOS DE IMAGENS DA STEAM ===
 <a href=#20 id=20 data-nosnippet>20</a></span><span class="kw">pub const </span>STEAM_HEADER_IMAGE_PATH: <span class="kw-2">&amp;</span>str = <span class="string">"steam/apps/{}/header.jpg"</span>;
@@ -90,72 +90,73 @@
 <a href=#90 id=90 data-nosnippet>90</a><span class="kw">pub const </span>BACKGROUND_TASK_INTERVAL_SECS: u64 = <span class="number">2</span>;
 <a href=#91 id=91 data-nosnippet>91</a>
 <a href=#92 id=92 data-nosnippet>92</a><span class="comment">// === TTL DE CACHE (Time To Live em dias) ===
-<a href=#93 id=93 data-nosnippet>93</a></span><span class="kw">pub const </span>CACHE_RAWG_GAME_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#94 id=94 data-nosnippet>94</a><span class="kw">pub const </span>CACHE_RAWG_LIST_TTL_DAYS: i64 = <span class="number">1</span>; <span class="comment">// Trending/Upcoming/Giveaways
-<a href=#95 id=95 data-nosnippet>95</a></span><span class="kw">pub const </span>CACHE_GAMEBRAIN_ID_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#96 id=96 data-nosnippet>96</a><span class="kw">pub const </span>CACHE_GAMEBRAIN_SIMILAR_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#97 id=97 data-nosnippet>97</a><span class="kw">pub const </span>CACHE_GAMEBRAIN_MEDIA_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#98 id=98 data-nosnippet>98</a><span class="kw">pub const </span>CACHE_STEAM_STORE_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#99 id=99 data-nosnippet>99</a><span class="kw">pub const </span>CACHE_STEAM_REVIEWS_TTL_DAYS: i64 = <span class="number">7</span>;
-<a href=#100 id=100 data-nosnippet>100</a><span class="kw">pub const </span>CACHE_STEAM_PLAYTIME_TTL_DAYS: i64 = <span class="number">15</span>;
-<a href=#101 id=101 data-nosnippet>101</a><span class="kw">pub const </span>CACHE_AMAZON_LUNA_TTL_DAYS: i64 = <span class="number">1</span>;
-<a href=#102 id=102 data-nosnippet>102</a><span class="kw">pub const </span>CACHE_GAMERPOWER_TTL_DAYS: i64 = <span class="number">1</span>;
-<a href=#103 id=103 data-nosnippet>103</a><span class="kw">pub const </span>CACHE_GAME_PASS_FULL_TTL_DAYS: i64 = <span class="number">15</span>;
-<a href=#104 id=104 data-nosnippet>104</a><span class="kw">pub const </span>CACHE_UBISOFT_PLUS_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#105 id=105 data-nosnippet>105</a><span class="kw">pub const </span>CACHE_EA_PLAY_TTL_DAYS: i64 = <span class="number">30</span>;
-<a href=#106 id=106 data-nosnippet>106</a><span class="kw">pub const </span>CACHE_DEFAULT_TTL_DAYS: i64 = <span class="number">7</span>;
-<a href=#107 id=107 data-nosnippet>107</a>
-<a href=#108 id=108 data-nosnippet>108</a><span class="comment">// === CHAVES DE CACHE DE ASSINATURAS ===
-<a href=#109 id=109 data-nosnippet>109</a></span><span class="kw">pub const </span>AMAZON_LUNA_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"amazon_luna"</span>;
-<a href=#110 id=110 data-nosnippet>110</a><span class="kw">pub const </span>AMAZON_LUNA_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_amazon_luna"</span>;
-<a href=#111 id=111 data-nosnippet>111</a><span class="kw">pub const </span>GAMERPOWER_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"gamerpower"</span>;
-<a href=#112 id=112 data-nosnippet>112</a><span class="kw">pub const </span>GAMERPOWER_LIST_ACTIVE_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"gamerpower_list_active"</span>;
-<a href=#113 id=113 data-nosnippet>113</a><span class="kw">pub const </span>EA_PLAY_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"ea_play"</span>;
-<a href=#114 id=114 data-nosnippet>114</a><span class="kw">pub const </span>EA_PLAY_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_ea_play"</span>;
-<a href=#115 id=115 data-nosnippet>115</a><span class="kw">pub const </span>GAME_PASS_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"game_pass_pc"</span>;
-<a href=#116 id=116 data-nosnippet>116</a><span class="kw">pub const </span>GAME_PASS_FULL_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_game_pass_full"</span>;
-<a href=#117 id=117 data-nosnippet>117</a><span class="kw">pub const </span>UBISOFT_PLUS_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"ubisoft_plus"</span>;
-<a href=#118 id=118 data-nosnippet>118</a><span class="kw">pub const </span>UBISOFT_PLUS_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_ubisoft_plus"</span>;
-<a href=#119 id=119 data-nosnippet>119</a>
-<a href=#120 id=120 data-nosnippet>120</a><span class="comment">// === NOMES DE ARQUIVOS E CONFIGURAÇÕES DE BANCO DE DADOS ===
-<a href=#121 id=121 data-nosnippet>121</a></span><span class="kw">pub const </span>DB_FILENAME_GAMES: <span class="kw-2">&amp;</span>str = <span class="string">"games.db"</span>;
-<a href=#122 id=122 data-nosnippet>122</a><span class="kw">pub const </span>DB_FILENAME_CACHE: <span class="kw-2">&amp;</span>str = <span class="string">"cache.db"</span>;
-<a href=#123 id=123 data-nosnippet>123</a><span class="kw">pub const </span>DB_FILENAME_SECRETS: <span class="kw-2">&amp;</span>str = <span class="string">"secrets.db"</span>;
-<a href=#124 id=124 data-nosnippet>124</a><span class="kw">pub const </span>DB_JOURNAL_MODE: <span class="kw-2">&amp;</span>str = <span class="string">"WAL"</span>;
-<a href=#125 id=125 data-nosnippet>125</a>
-<a href=#126 id=126 data-nosnippet>126</a><span class="comment">// === OAuth GOG ===
-<a href=#127 id=127 data-nosnippet>127</a></span><span class="kw">pub const </span>GOG_CLIENT_ID: <span class="kw-2">&amp;</span>str = <span class="string">"46899977096215655"</span>;
-<a href=#128 id=128 data-nosnippet>128</a><span class="kw">pub const </span>GOG_CLIENT_SECRET: <span class="kw-2">&amp;</span>str =
-<a href=#129 id=129 data-nosnippet>129</a>    <span class="string">"9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9"</span>;
-<a href=#130 id=130 data-nosnippet>130</a><span class="kw">pub const </span>GOG_AUTH_ENDPOINT: <span class="kw-2">&amp;</span>str = <span class="string">"https://login.gog.com/auth"</span>;
-<a href=#131 id=131 data-nosnippet>131</a><span class="kw">pub const </span>GOG_TOKEN_ENDPOINT: <span class="kw-2">&amp;</span>str = <span class="string">"https://auth.gog.com/token"</span>;
-<a href=#132 id=132 data-nosnippet>132</a><span class="kw">pub const </span>GOG_REDIRECT_URI: <span class="kw-2">&amp;</span>str = <span class="string">"https://embed.gog.com/on_login_success?origin=client"</span>;
-<a href=#133 id=133 data-nosnippet>133</a><span class="kw">pub const </span>GOG_FILTERED_PRODUCTS_ENDPOINT: <span class="kw-2">&amp;</span>str =
-<a href=#134 id=134 data-nosnippet>134</a>    <span class="string">"https://embed.gog.com/account/getFilteredProducts"</span>;
-<a href=#135 id=135 data-nosnippet>135</a>
-<a href=#136 id=136 data-nosnippet>136</a><span class="comment">// === OAuth Epic Games — endpoints e client_id/secret públicos ===
-<a href=#137 id=137 data-nosnippet>137</a></span><span class="kw">pub const </span>EPIC_OAUTH_CLIENT_ID: <span class="kw-2">&amp;</span>str = <span class="string">"34a02cf8f4414e29b15921876da36f9a"</span>;
-<a href=#138 id=138 data-nosnippet>138</a><span class="kw">pub const </span>EPIC_OAUTH_CLIENT_SECRET: <span class="kw-2">&amp;</span>str = <span class="string">"daafbccc737745039dffe53d94fc76cf"</span>;
-<a href=#139 id=139 data-nosnippet>139</a><span class="kw">pub const </span>EPIC_LOGIN_URL: <span class="kw-2">&amp;</span>str = <span class="string">"https://www.epicgames.com/id/login?redirectUrl=https%3A%2F%2Fwww.epicgames.com%2Fid%2Fapi%2Fredirect%3FclientId%3D34a02cf8f4414e29b15921876da36f9a%26responseType%3Dcode"</span>;
-<a href=#140 id=140 data-nosnippet>140</a><span class="kw">pub const </span>EPIC_REDIRECT_PREFIX: <span class="kw-2">&amp;</span>str = <span class="string">"https://www.epicgames.com/id/api/redirect"</span>;
-<a href=#141 id=141 data-nosnippet>141</a><span class="kw">pub const </span>EPIC_PSEUDO_REDIRECT_SCHEME: <span class="kw-2">&amp;</span>str = <span class="string">"playlite://epic-auth-code"</span>;
-<a href=#142 id=142 data-nosnippet>142</a><span class="kw">pub const </span>EPIC_TOKEN_ENDPOINT: <span class="kw-2">&amp;</span>str =
-<a href=#143 id=143 data-nosnippet>143</a>    <span class="string">"https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token"</span>;
-<a href=#144 id=144 data-nosnippet>144</a><span class="kw">pub const </span>EPIC_LIBRARY_ENDPOINT: <span class="kw-2">&amp;</span>str =
-<a href=#145 id=145 data-nosnippet>145</a>    <span class="string">"https://library-service.live.use1a.on.epicgames.com/library/api/public/items"</span>;
-<a href=#146 id=146 data-nosnippet>146</a><span class="kw">pub const </span>EPIC_CATALOG_BULK_ENDPOINT: <span class="kw-2">&amp;</span>str =
-<a href=#147 id=147 data-nosnippet>147</a>    <span class="string">"https://catalog-public-service-prod06.ol.epicgames.com/catalog/api/shared/namespace"</span>;
-<a href=#148 id=148 data-nosnippet>148</a>
-<a href=#149 id=149 data-nosnippet>149</a><span class="comment">// === Amazon Games (device registration flow — baseado no cliente open-source Nile) ===
-<a href=#150 id=150 data-nosnippet>150</a></span><span class="kw">pub const </span>AMAZON_API: <span class="kw-2">&amp;</span>str = <span class="string">"https://api.amazon.com"</span>;
-<a href=#151 id=151 data-nosnippet>151</a><span class="kw">pub const </span>AMAZON_GAMING_DISTRIBUTION_ENTITLEMENTS: <span class="kw-2">&amp;</span>str =
-<a href=#152 id=152 data-nosnippet>152</a>    <span class="string">"https://gaming.amazon.com/api/distribution/entitlements"</span>;
-<a href=#153 id=153 data-nosnippet>153</a><span class="kw">pub const </span>AMAZON_MARKETPLACE_ID: <span class="kw-2">&amp;</span>str = <span class="string">"ATVPDKIKX0DER"</span>;
-<a href=#154 id=154 data-nosnippet>154</a><span class="kw">pub const </span>AMAZON_ASSOC_HANDLE: <span class="kw-2">&amp;</span>str = <span class="string">"amzn_sonic_games_launcher"</span>;
-<a href=#155 id=155 data-nosnippet>155</a><span class="kw">pub const </span>AMAZON_DEVICE_TYPE: <span class="kw-2">&amp;</span>str = <span class="string">"A2UMVHOX7UP4V7"</span>;
-<a href=#156 id=156 data-nosnippet>156</a><span class="kw">pub const </span>AMAZON_APP_NAME: <span class="kw-2">&amp;</span>str = <span class="string">"AGSLauncher for Windows"</span>;
-<a href=#157 id=157 data-nosnippet>157</a><span class="kw">pub const </span>AMAZON_APP_VERSION: <span class="kw-2">&amp;</span>str = <span class="string">"1.0.0"</span>;
-<a href=#158 id=158 data-nosnippet>158</a><span class="kw">pub const </span>AMAZON_REDIRECT_PREFIX: <span class="kw-2">&amp;</span>str =
-<a href=#159 id=159 data-nosnippet>159</a>    <span class="string">"https://www.amazon.com/?openid.assoc_handle=amzn_sonic_games_launcher"</span>;
-<a href=#160 id=160 data-nosnippet>160</a><span class="kw">pub const </span>AMAZON_ENTITLEMENTS_KEY_ID: <span class="kw-2">&amp;</span>str = <span class="string">"d5dc8b8b-86c8-4fc4-ae93-18c0def5314d"</span>;
+<a href=#93 id=93 data-nosnippet>93</a></span><span class="kw">pub const </span>CACHE_STEAM_RESOLVE_TTL_DAYS: i64 = <span class="number">90</span>;
+<a href=#94 id=94 data-nosnippet>94</a><span class="kw">pub const </span>CACHE_RAWG_GAME_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#95 id=95 data-nosnippet>95</a><span class="kw">pub const </span>CACHE_RAWG_LIST_TTL_DAYS: i64 = <span class="number">1</span>; <span class="comment">// Trending/Upcoming/Giveaways
+<a href=#96 id=96 data-nosnippet>96</a></span><span class="kw">pub const </span>CACHE_GAMEBRAIN_ID_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#97 id=97 data-nosnippet>97</a><span class="kw">pub const </span>CACHE_GAMEBRAIN_SIMILAR_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#98 id=98 data-nosnippet>98</a><span class="kw">pub const </span>CACHE_GAMEBRAIN_MEDIA_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#99 id=99 data-nosnippet>99</a><span class="kw">pub const </span>CACHE_STEAM_STORE_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#100 id=100 data-nosnippet>100</a><span class="kw">pub const </span>CACHE_STEAM_REVIEWS_TTL_DAYS: i64 = <span class="number">7</span>;
+<a href=#101 id=101 data-nosnippet>101</a><span class="kw">pub const </span>CACHE_STEAM_PLAYTIME_TTL_DAYS: i64 = <span class="number">15</span>;
+<a href=#102 id=102 data-nosnippet>102</a><span class="kw">pub const </span>CACHE_AMAZON_LUNA_TTL_DAYS: i64 = <span class="number">1</span>;
+<a href=#103 id=103 data-nosnippet>103</a><span class="kw">pub const </span>CACHE_GAMERPOWER_TTL_DAYS: i64 = <span class="number">1</span>;
+<a href=#104 id=104 data-nosnippet>104</a><span class="kw">pub const </span>CACHE_GAME_PASS_FULL_TTL_DAYS: i64 = <span class="number">15</span>;
+<a href=#105 id=105 data-nosnippet>105</a><span class="kw">pub const </span>CACHE_UBISOFT_PLUS_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#106 id=106 data-nosnippet>106</a><span class="kw">pub const </span>CACHE_EA_PLAY_TTL_DAYS: i64 = <span class="number">30</span>;
+<a href=#107 id=107 data-nosnippet>107</a><span class="kw">pub const </span>CACHE_DEFAULT_TTL_DAYS: i64 = <span class="number">7</span>;
+<a href=#108 id=108 data-nosnippet>108</a>
+<a href=#109 id=109 data-nosnippet>109</a><span class="comment">// === CHAVES DE CACHE DE ASSINATURAS ===
+<a href=#110 id=110 data-nosnippet>110</a></span><span class="kw">pub const </span>AMAZON_LUNA_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"amazon_luna"</span>;
+<a href=#111 id=111 data-nosnippet>111</a><span class="kw">pub const </span>AMAZON_LUNA_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_amazon_luna"</span>;
+<a href=#112 id=112 data-nosnippet>112</a><span class="kw">pub const </span>GAMERPOWER_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"gamerpower"</span>;
+<a href=#113 id=113 data-nosnippet>113</a><span class="kw">pub const </span>GAMERPOWER_LIST_ACTIVE_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"gamerpower_list_active"</span>;
+<a href=#114 id=114 data-nosnippet>114</a><span class="kw">pub const </span>EA_PLAY_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"ea_play"</span>;
+<a href=#115 id=115 data-nosnippet>115</a><span class="kw">pub const </span>EA_PLAY_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_ea_play"</span>;
+<a href=#116 id=116 data-nosnippet>116</a><span class="kw">pub const </span>GAME_PASS_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"game_pass_pc"</span>;
+<a href=#117 id=117 data-nosnippet>117</a><span class="kw">pub const </span>GAME_PASS_FULL_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_game_pass_full"</span>;
+<a href=#118 id=118 data-nosnippet>118</a><span class="kw">pub const </span>UBISOFT_PLUS_CACHE_SOURCE: <span class="kw-2">&amp;</span>str = <span class="string">"ubisoft_plus"</span>;
+<a href=#119 id=119 data-nosnippet>119</a><span class="kw">pub const </span>UBISOFT_PLUS_CACHE_KEY: <span class="kw-2">&amp;</span>str = <span class="string">"catalog_ubisoft_plus"</span>;
+<a href=#120 id=120 data-nosnippet>120</a>
+<a href=#121 id=121 data-nosnippet>121</a><span class="comment">// === NOMES DE ARQUIVOS E CONFIGURAÇÕES DE BANCO DE DADOS ===
+<a href=#122 id=122 data-nosnippet>122</a></span><span class="kw">pub const </span>DB_FILENAME_GAMES: <span class="kw-2">&amp;</span>str = <span class="string">"games.db"</span>;
+<a href=#123 id=123 data-nosnippet>123</a><span class="kw">pub const </span>DB_FILENAME_CACHE: <span class="kw-2">&amp;</span>str = <span class="string">"cache.db"</span>;
+<a href=#124 id=124 data-nosnippet>124</a><span class="kw">pub const </span>DB_FILENAME_SECRETS: <span class="kw-2">&amp;</span>str = <span class="string">"secrets.db"</span>;
+<a href=#125 id=125 data-nosnippet>125</a><span class="kw">pub const </span>DB_JOURNAL_MODE: <span class="kw-2">&amp;</span>str = <span class="string">"WAL"</span>;
+<a href=#126 id=126 data-nosnippet>126</a>
+<a href=#127 id=127 data-nosnippet>127</a><span class="comment">// === OAuth GOG ===
+<a href=#128 id=128 data-nosnippet>128</a></span><span class="kw">pub const </span>GOG_CLIENT_ID: <span class="kw-2">&amp;</span>str = <span class="string">"46899977096215655"</span>;
+<a href=#129 id=129 data-nosnippet>129</a><span class="kw">pub const </span>GOG_CLIENT_SECRET: <span class="kw-2">&amp;</span>str =
+<a href=#130 id=130 data-nosnippet>130</a>    <span class="string">"9d85c43b1482497dbbce61f6e4aa173a433796eeae2ca8c5f6129f2dc4de46d9"</span>;
+<a href=#131 id=131 data-nosnippet>131</a><span class="kw">pub const </span>GOG_AUTH_ENDPOINT: <span class="kw-2">&amp;</span>str = <span class="string">"https://login.gog.com/auth"</span>;
+<a href=#132 id=132 data-nosnippet>132</a><span class="kw">pub const </span>GOG_TOKEN_ENDPOINT: <span class="kw-2">&amp;</span>str = <span class="string">"https://auth.gog.com/token"</span>;
+<a href=#133 id=133 data-nosnippet>133</a><span class="kw">pub const </span>GOG_REDIRECT_URI: <span class="kw-2">&amp;</span>str = <span class="string">"https://embed.gog.com/on_login_success?origin=client"</span>;
+<a href=#134 id=134 data-nosnippet>134</a><span class="kw">pub const </span>GOG_FILTERED_PRODUCTS_ENDPOINT: <span class="kw-2">&amp;</span>str =
+<a href=#135 id=135 data-nosnippet>135</a>    <span class="string">"https://embed.gog.com/account/getFilteredProducts"</span>;
+<a href=#136 id=136 data-nosnippet>136</a>
+<a href=#137 id=137 data-nosnippet>137</a><span class="comment">// === OAuth Epic Games — endpoints e client_id/secret públicos ===
+<a href=#138 id=138 data-nosnippet>138</a></span><span class="kw">pub const </span>EPIC_OAUTH_CLIENT_ID: <span class="kw-2">&amp;</span>str = <span class="string">"34a02cf8f4414e29b15921876da36f9a"</span>;
+<a href=#139 id=139 data-nosnippet>139</a><span class="kw">pub const </span>EPIC_OAUTH_CLIENT_SECRET: <span class="kw-2">&amp;</span>str = <span class="string">"daafbccc737745039dffe53d94fc76cf"</span>;
+<a href=#140 id=140 data-nosnippet>140</a><span class="kw">pub const </span>EPIC_LOGIN_URL: <span class="kw-2">&amp;</span>str = <span class="string">"https://www.epicgames.com/id/login?redirectUrl=https%3A%2F%2Fwww.epicgames.com%2Fid%2Fapi%2Fredirect%3FclientId%3D34a02cf8f4414e29b15921876da36f9a%26responseType%3Dcode"</span>;
+<a href=#141 id=141 data-nosnippet>141</a><span class="kw">pub const </span>EPIC_REDIRECT_PREFIX: <span class="kw-2">&amp;</span>str = <span class="string">"https://www.epicgames.com/id/api/redirect"</span>;
+<a href=#142 id=142 data-nosnippet>142</a><span class="kw">pub const </span>EPIC_PSEUDO_REDIRECT_SCHEME: <span class="kw-2">&amp;</span>str = <span class="string">"playlite://epic-auth-code"</span>;
+<a href=#143 id=143 data-nosnippet>143</a><span class="kw">pub const </span>EPIC_TOKEN_ENDPOINT: <span class="kw-2">&amp;</span>str =
+<a href=#144 id=144 data-nosnippet>144</a>    <span class="string">"https://account-public-service-prod.ol.epicgames.com/account/api/oauth/token"</span>;
+<a href=#145 id=145 data-nosnippet>145</a><span class="kw">pub const </span>EPIC_LIBRARY_ENDPOINT: <span class="kw-2">&amp;</span>str =
+<a href=#146 id=146 data-nosnippet>146</a>    <span class="string">"https://library-service.live.use1a.on.epicgames.com/library/api/public/items"</span>;
+<a href=#147 id=147 data-nosnippet>147</a><span class="kw">pub const </span>EPIC_CATALOG_BULK_ENDPOINT: <span class="kw-2">&amp;</span>str =
+<a href=#148 id=148 data-nosnippet>148</a>    <span class="string">"https://catalog-public-service-prod06.ol.epicgames.com/catalog/api/shared/namespace"</span>;
+<a href=#149 id=149 data-nosnippet>149</a>
+<a href=#150 id=150 data-nosnippet>150</a><span class="comment">// === Amazon Games (device registration flow — baseado no cliente open-source Nile) ===
+<a href=#151 id=151 data-nosnippet>151</a></span><span class="kw">pub const </span>AMAZON_API: <span class="kw-2">&amp;</span>str = <span class="string">"https://api.amazon.com"</span>;
+<a href=#152 id=152 data-nosnippet>152</a><span class="kw">pub const </span>AMAZON_GAMING_DISTRIBUTION_ENTITLEMENTS: <span class="kw-2">&amp;</span>str =
+<a href=#153 id=153 data-nosnippet>153</a>    <span class="string">"https://gaming.amazon.com/api/distribution/entitlements"</span>;
+<a href=#154 id=154 data-nosnippet>154</a><span class="kw">pub const </span>AMAZON_MARKETPLACE_ID: <span class="kw-2">&amp;</span>str = <span class="string">"ATVPDKIKX0DER"</span>;
+<a href=#155 id=155 data-nosnippet>155</a><span class="kw">pub const </span>AMAZON_ASSOC_HANDLE: <span class="kw-2">&amp;</span>str = <span class="string">"amzn_sonic_games_launcher"</span>;
+<a href=#156 id=156 data-nosnippet>156</a><span class="kw">pub const </span>AMAZON_DEVICE_TYPE: <span class="kw-2">&amp;</span>str = <span class="string">"A2UMVHOX7UP4V7"</span>;
+<a href=#157 id=157 data-nosnippet>157</a><span class="kw">pub const </span>AMAZON_APP_NAME: <span class="kw-2">&amp;</span>str = <span class="string">"AGSLauncher for Windows"</span>;
+<a href=#158 id=158 data-nosnippet>158</a><span class="kw">pub const </span>AMAZON_APP_VERSION: <span class="kw-2">&amp;</span>str = <span class="string">"1.0.0"</span>;
+<a href=#159 id=159 data-nosnippet>159</a><span class="kw">pub const </span>AMAZON_REDIRECT_PREFIX: <span class="kw-2">&amp;</span>str =
+<a href=#160 id=160 data-nosnippet>160</a>    <span class="string">"https://www.amazon.com/?openid.assoc_handle=amzn_sonic_games_launcher"</span>;
+<a href=#161 id=161 data-nosnippet>161</a><span class="kw">pub const </span>AMAZON_ENTITLEMENTS_KEY_ID: <span class="kw-2">&amp;</span>str = <span class="string">"d5dc8b8b-86c8-4fc4-ae93-18c0def5314d"</span>;
 </code></pre></div></section></main></body></html>
