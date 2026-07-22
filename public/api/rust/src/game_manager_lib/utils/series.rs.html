@@ -3,7 +3,7 @@
 <a href=#3 id=3 data-nosnippet>3</a>//! Baseado no nome do jogo, tenta identificar a série a que ele pertence.
 <a href=#4 id=4 data-nosnippet>4</a>//! Utiliza uma lista conhecida de séries e heurísticas simples para identificar a série correta.
 <a href=#5 id=5 data-nosnippet>5</a>
-<a href=#6 id=6 data-nosnippet>6</a></span><span class="kw">use </span><span class="kw">crate</span>::utils::text::normalize_for_matching;
+<a href=#6 id=6 data-nosnippet>6</a></span><span class="kw">use </span><span class="kw">crate</span>::utils::text::{contains_word_boundary, normalize_for_matching};
 <a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span>std::sync::OnceLock;
 <a href=#8 id=8 data-nosnippet>8</a>
 <a href=#9 id=9 data-nosnippet>9</a><span class="doccomment">/// Carrega e cacheia a lista de séries do JSON
@@ -27,7 +27,7 @@
 <a href=#27 id=27 data-nosnippet>27</a>    <span class="comment">// 1. Busca na lista conhecida
 <a href=#28 id=28 data-nosnippet>28</a>    </span><span class="kw">for </span>series <span class="kw">in </span>known_list {
 <a href=#29 id=29 data-nosnippet>29</a>        <span class="kw">let </span>normalized_series = normalize_for_matching(<span class="kw-2">&amp;</span>series);
-<a href=#30 id=30 data-nosnippet>30</a>        <span class="kw">if </span>normalized_target.contains(<span class="kw-2">&amp;</span>normalized_series) {
+<a href=#30 id=30 data-nosnippet>30</a>        <span class="kw">if </span>contains_word_boundary(<span class="kw-2">&amp;</span>normalized_target, <span class="kw-2">&amp;</span>normalized_series) {
 <a href=#31 id=31 data-nosnippet>31</a>            <span class="kw">return </span><span class="prelude-val">Some</span>(series.clone());
 <a href=#32 id=32 data-nosnippet>32</a>        }
 <a href=#33 id=33 data-nosnippet>33</a>    }

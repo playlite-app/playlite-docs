@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/utils/text.rs`."><title>text.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="game_manager_lib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.1 (8bab26f4f 2026-07-14)" data-channel="1.97.1" data-search-js="search-fd9372ac.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-fcd733ba.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">game_manager_lib/utils/</div>text.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-2"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! Utilitários para manipulação de Strings em nomes de jogos, séries e tags.
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/utils/text.rs`."><title>text.rs - source</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-17e0aaed.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="game_manager_lib" data-themes="" data-resource-suffix="" data-rustdoc-version="1.97.1 (8bab26f4f 2026-07-14)" data-channel="1.97.1" data-search-js="search-fd9372ac.js" data-stringdex-js="stringdex-2da4960a.js" data-settings-js="settings-170eb4bf.js" ><script src="../../../static.files/storage-41dd4d93.js"></script><script defer src="../../../static.files/src-script-813739b1.js"></script><script defer src="../../../src-files.js"></script><script defer src="../../../static.files/main-fcd733ba.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-f7c3ffd8.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc src"><a class="skip-main-content" href="#main-content">Skip to main content</a><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="src-sidebar-title"><h2>Files</h2></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><section id="main-content" class="content" tabindex="-1"><div class="main-heading"><h1><div class="sub-heading">game_manager_lib/utils/</div>text.rs</h1><rustdoc-toolbar></rustdoc-toolbar></div><div class="example-wrap digits-3"><pre class="rust"><code><a href=#1 id=1 data-nosnippet>1</a><span class="doccomment">//! Utilitários para manipulação de Strings em nomes de jogos, séries e tags.
 <a href=#2 id=2 data-nosnippet>2</a>
 <a href=#3 id=3 data-nosnippet>3</a></span><span class="comment">// === CONSTANTS ===
 <a href=#4 id=4 data-nosnippet>4</a>
@@ -38,45 +38,80 @@
 <a href=#38 id=38 data-nosnippet>38</a>        .to_string()
 <a href=#39 id=39 data-nosnippet>39</a>}
 <a href=#40 id=40 data-nosnippet>40</a>
-<a href=#41 id=41 data-nosnippet>41</a><span class="doccomment">/// Heurística por palavra-chave para identificar nomes que provavelmente
-<a href=#42 id=42 data-nosnippet>42</a>/// não são o jogo-base (DLC, edição especial, trilha sonora, demo, pré-venda).
-<a href=#43 id=43 data-nosnippet>43</a>/// Não é definitivo — é um filtro barato para descartar candidatos óbvios
-<a href=#44 id=44 data-nosnippet>44</a>/// antes de aplicar critérios mais confiáveis (match exato, dados estruturados).
-<a href=#45 id=45 data-nosnippet>45</a></span><span class="kw">pub fn </span>is_likely_non_base_game(name: <span class="kw-2">&amp;</span>str) -&gt; bool {
-<a href=#46 id=46 data-nosnippet>46</a>    <span class="kw">let </span>lower = name.to_lowercase();
-<a href=#47 id=47 data-nosnippet>47</a>    <span class="kw">let </span>keywords = [
-<a href=#48 id=48 data-nosnippet>48</a>        <span class="string">"season pass"</span>,
-<a href=#49 id=49 data-nosnippet>49</a>        <span class="string">" dlc"</span>,
-<a href=#50 id=50 data-nosnippet>50</a>        <span class="string">"demo"</span>,
-<a href=#51 id=51 data-nosnippet>51</a>        <span class="string">"add-on"</span>,
-<a href=#52 id=52 data-nosnippet>52</a>        <span class="string">"addon"</span>,
-<a href=#53 id=53 data-nosnippet>53</a>        <span class="string">"expansion"</span>,
-<a href=#54 id=54 data-nosnippet>54</a>        <span class="string">"pre-order"</span>,
-<a href=#55 id=55 data-nosnippet>55</a>        <span class="string">"preorder"</span>,
-<a href=#56 id=56 data-nosnippet>56</a>        <span class="string">"pre order"</span>,
-<a href=#57 id=57 data-nosnippet>57</a>        <span class="string">"starter pack"</span>,
-<a href=#58 id=58 data-nosnippet>58</a>        <span class="string">" pack"</span>,
-<a href=#59 id=59 data-nosnippet>59</a>        <span class="string">"soundtrack"</span>,
-<a href=#60 id=60 data-nosnippet>60</a>        <span class="string">"artbook"</span>,
-<a href=#61 id=61 data-nosnippet>61</a>        <span class="string">"art book"</span>,
-<a href=#62 id=62 data-nosnippet>62</a>        <span class="string">"playtest"</span>,
-<a href=#63 id=63 data-nosnippet>63</a>        <span class="string">"goodie"</span>,
-<a href=#64 id=64 data-nosnippet>64</a>    ];
-<a href=#65 id=65 data-nosnippet>65</a>    keywords.iter().any(|kw| lower.contains(kw))
-<a href=#66 id=66 data-nosnippet>66</a>}
-<a href=#67 id=67 data-nosnippet>67</a>
-<a href=#68 id=68 data-nosnippet>68</a><span class="doccomment">/// Remove sufixo de edição conhecido do final do nome, se houver.
-<a href=#69 id=69 data-nosnippet>69</a>/// Usado como segunda tentativa de match quando o nome completo (com edição) não bate.
-<a href=#70 id=70 data-nosnippet>70</a></span><span class="kw">pub fn </span>strip_edition_suffix(name: <span class="kw-2">&amp;</span>str) -&gt; String {
-<a href=#71 id=71 data-nosnippet>71</a>    <span class="kw">let </span>trimmed = name.trim();
-<a href=#72 id=72 data-nosnippet>72</a>    <span class="kw">for </span>suffix <span class="kw">in </span>EDITION_SUFFIXES {
-<a href=#73 id=73 data-nosnippet>73</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(rest) = trimmed.to_lowercase().strip_suffix(<span class="kw-2">&amp;</span>suffix.to_lowercase()) {
-<a href=#74 id=74 data-nosnippet>74</a>            <span class="kw">return </span>trimmed[..rest.len()]
-<a href=#75 id=75 data-nosnippet>75</a>                .trim_end_matches([<span class="string">'-'</span>, <span class="string">':'</span>, <span class="string">','</span>, <span class="string">' '</span>])
-<a href=#76 id=76 data-nosnippet>76</a>                .trim()
-<a href=#77 id=77 data-nosnippet>77</a>                .to_string();
-<a href=#78 id=78 data-nosnippet>78</a>        }
-<a href=#79 id=79 data-nosnippet>79</a>    }
-<a href=#80 id=80 data-nosnippet>80</a>    trimmed.to_string()
-<a href=#81 id=81 data-nosnippet>81</a>}
+<a href=#41 id=41 data-nosnippet>41</a><span class="doccomment">/// Verifica se `needle` aparece em `haystack` com fronteira de palavra nos dois lados
+<a href=#42 id=42 data-nosnippet>42</a>/// (sem letra/dígito colado antes ou depois). Evita falsos positivos como "demo"
+<a href=#43 id=43 data-nosnippet>43</a>/// dentro de "demon's" ou "trial" dentro de "trials".
+<a href=#44 id=44 data-nosnippet>44</a></span><span class="kw">pub fn </span>contains_word_boundary(haystack: <span class="kw-2">&amp;</span>str, needle: <span class="kw-2">&amp;</span>str) -&gt; bool {
+<a href=#45 id=45 data-nosnippet>45</a>    <span class="kw">let </span>h = haystack.as_bytes();
+<a href=#46 id=46 data-nosnippet>46</a>    <span class="kw">let </span>n = needle.as_bytes();
+<a href=#47 id=47 data-nosnippet>47</a>    <span class="kw">if </span>n.is_empty() || n.len() &gt; h.len() {
+<a href=#48 id=48 data-nosnippet>48</a>        <span class="kw">return </span><span class="bool-val">false</span>;
+<a href=#49 id=49 data-nosnippet>49</a>    }
+<a href=#50 id=50 data-nosnippet>50</a>    <span class="kw">for </span>start <span class="kw">in </span><span class="number">0</span>..=(h.len() - n.len()) {
+<a href=#51 id=51 data-nosnippet>51</a>        <span class="kw">if </span><span class="kw-2">&amp;</span>h[start..start + n.len()] == n {
+<a href=#52 id=52 data-nosnippet>52</a>            <span class="kw">let </span>before_ok = start == <span class="number">0 </span>|| !(h[start - <span class="number">1</span>] <span class="kw">as </span>char).is_alphanumeric();
+<a href=#53 id=53 data-nosnippet>53</a>            <span class="kw">let </span>end = start + n.len();
+<a href=#54 id=54 data-nosnippet>54</a>            <span class="kw">let </span>after_ok = end == h.len() || !(h[end] <span class="kw">as </span>char).is_alphanumeric();
+<a href=#55 id=55 data-nosnippet>55</a>            <span class="kw">if </span>before_ok &amp;&amp; after_ok {
+<a href=#56 id=56 data-nosnippet>56</a>                <span class="kw">return </span><span class="bool-val">true</span>;
+<a href=#57 id=57 data-nosnippet>57</a>            }
+<a href=#58 id=58 data-nosnippet>58</a>        }
+<a href=#59 id=59 data-nosnippet>59</a>    }
+<a href=#60 id=60 data-nosnippet>60</a>    <span class="bool-val">false
+<a href=#61 id=61 data-nosnippet>61</a></span>}
+<a href=#62 id=62 data-nosnippet>62</a>
+<a href=#63 id=63 data-nosnippet>63</a><span class="doccomment">/// Heurística por palavra-chave para identificar nomes que provavelmente
+<a href=#64 id=64 data-nosnippet>64</a>/// não são o jogo-base (DLC, edição especial, trilha sonora, demo, pré-venda).
+<a href=#65 id=65 data-nosnippet>65</a>/// Não é definitivo — é um filtro barato para descartar candidatos óbvios
+<a href=#66 id=66 data-nosnippet>66</a>/// antes de aplicar critérios mais confiáveis (match exato, dados estruturados).
+<a href=#67 id=67 data-nosnippet>67</a></span><span class="kw">pub fn </span>is_likely_non_base_game(name: <span class="kw-2">&amp;</span>str) -&gt; bool {
+<a href=#68 id=68 data-nosnippet>68</a>    <span class="kw">let </span>lower = name.to_lowercase();
+<a href=#69 id=69 data-nosnippet>69</a>    <span class="kw">if </span>name.trim().len() &lt;= <span class="number">2 </span>{
+<a href=#70 id=70 data-nosnippet>70</a>        <span class="kw">return </span><span class="bool-val">true</span>;
+<a href=#71 id=71 data-nosnippet>71</a>    }
+<a href=#72 id=72 data-nosnippet>72</a>
+<a href=#73 id=73 data-nosnippet>73</a>    <span class="comment">// Palavras curtas com risco comprovado de colisão (demon's, trials) — exigem fronteira de palavra nos dois lados.
+<a href=#74 id=74 data-nosnippet>74</a>    </span><span class="kw">let </span>boundary_keywords = [<span class="string">"demo"</span>, <span class="string">"trial"</span>];
+<a href=#75 id=75 data-nosnippet>75</a>    <span class="kw">if </span>boundary_keywords
+<a href=#76 id=76 data-nosnippet>76</a>        .iter()
+<a href=#77 id=77 data-nosnippet>77</a>        .any(|kw| contains_word_boundary(<span class="kw-2">&amp;</span>lower, kw))
+<a href=#78 id=78 data-nosnippet>78</a>    {
+<a href=#79 id=79 data-nosnippet>79</a>        <span class="kw">return </span><span class="bool-val">true</span>;
+<a href=#80 id=80 data-nosnippet>80</a>    }
+<a href=#81 id=81 data-nosnippet>81</a>
+<a href=#82 id=82 data-nosnippet>82</a>    <span class="comment">// Demais keywords: substring simples é seguro, pois não há risco de colisão com nomes de jogos conhecidos.
+<a href=#83 id=83 data-nosnippet>83</a>    </span><span class="kw">let </span>substring_keywords = [
+<a href=#84 id=84 data-nosnippet>84</a>        <span class="string">"season pass"</span>,
+<a href=#85 id=85 data-nosnippet>85</a>        <span class="string">"dlc"</span>,
+<a href=#86 id=86 data-nosnippet>86</a>        <span class="string">"add-on"</span>,
+<a href=#87 id=87 data-nosnippet>87</a>        <span class="string">"addon"</span>,
+<a href=#88 id=88 data-nosnippet>88</a>        <span class="string">"expansion"</span>,
+<a href=#89 id=89 data-nosnippet>89</a>        <span class="string">"pre-order"</span>,
+<a href=#90 id=90 data-nosnippet>90</a>        <span class="string">"preorder"</span>,
+<a href=#91 id=91 data-nosnippet>91</a>        <span class="string">"pre order"</span>,
+<a href=#92 id=92 data-nosnippet>92</a>        <span class="string">"starter pack"</span>,
+<a href=#93 id=93 data-nosnippet>93</a>        <span class="string">"pack"</span>,
+<a href=#94 id=94 data-nosnippet>94</a>        <span class="string">"soundtrack"</span>,
+<a href=#95 id=95 data-nosnippet>95</a>        <span class="string">"artbook"</span>,
+<a href=#96 id=96 data-nosnippet>96</a>        <span class="string">"art book"</span>,
+<a href=#97 id=97 data-nosnippet>97</a>        <span class="string">"playtest"</span>,
+<a href=#98 id=98 data-nosnippet>98</a>        <span class="string">"goodie"</span>,
+<a href=#99 id=99 data-nosnippet>99</a>    ];
+<a href=#100 id=100 data-nosnippet>100</a>    substring_keywords.iter().any(|kw| lower.contains(kw))
+<a href=#101 id=101 data-nosnippet>101</a>}
+<a href=#102 id=102 data-nosnippet>102</a>
+<a href=#103 id=103 data-nosnippet>103</a><span class="doccomment">/// Remove sufixo de edição conhecido do final do nome, se houver.
+<a href=#104 id=104 data-nosnippet>104</a>/// Usado como segunda tentativa de match quando o nome completo (com edição) não bate.
+<a href=#105 id=105 data-nosnippet>105</a></span><span class="kw">pub fn </span>strip_edition_suffix(name: <span class="kw-2">&amp;</span>str) -&gt; String {
+<a href=#106 id=106 data-nosnippet>106</a>    <span class="kw">let </span>trimmed = name.trim();
+<a href=#107 id=107 data-nosnippet>107</a>    <span class="kw">for </span>suffix <span class="kw">in </span>EDITION_SUFFIXES {
+<a href=#108 id=108 data-nosnippet>108</a>        <span class="kw">if let </span><span class="prelude-val">Some</span>(rest) = trimmed.to_lowercase().strip_suffix(<span class="kw-2">&amp;</span>suffix.to_lowercase()) {
+<a href=#109 id=109 data-nosnippet>109</a>            <span class="kw">return </span>trimmed[..rest.len()]
+<a href=#110 id=110 data-nosnippet>110</a>                .trim_end_matches([<span class="string">'-'</span>, <span class="string">':'</span>, <span class="string">','</span>, <span class="string">' '</span>])
+<a href=#111 id=111 data-nosnippet>111</a>                .trim()
+<a href=#112 id=112 data-nosnippet>112</a>                .to_string();
+<a href=#113 id=113 data-nosnippet>113</a>        }
+<a href=#114 id=114 data-nosnippet>114</a>    }
+<a href=#115 id=115 data-nosnippet>115</a>    trimmed.to_string()
+<a href=#116 id=116 data-nosnippet>116</a>}
 </code></pre></div></section></main></body></html>
