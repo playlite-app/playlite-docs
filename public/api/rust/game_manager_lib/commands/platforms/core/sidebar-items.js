@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["NewlyImportedGame","ScanGameInput","ScanResult"]};
+window.SIDEBAR_ITEMS = {"fn":["format_import_empty","format_import_summary","format_login_success"],"struct":["NewlyImportedGame","ScanGameInput","ScanResult"]};
