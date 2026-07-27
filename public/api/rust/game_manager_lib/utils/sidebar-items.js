@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["http_client","logger","oauth","series","status_logic","tag_utils","text"]};
+window.SIDEBAR_ITEMS = {"mod":["executable_heuristics","http_client","launcher","logger","oauth","series","status_logic","tag_utils","text"]};

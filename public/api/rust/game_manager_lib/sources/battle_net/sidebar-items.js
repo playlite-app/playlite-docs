@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["BattleNetGame","BattleNetSource"]};
+window.SIDEBAR_ITEMS = {"struct":["BattleNetSource"]};

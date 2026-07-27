@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"enum":["LaunchResolution"],"fn":["platform_fallback","resolve_launch","resolve_launcher_path"],"struct":["PlatformFallback"]};
