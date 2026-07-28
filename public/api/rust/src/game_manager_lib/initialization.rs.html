@@ -60,7 +60,7 @@
 <a href=#60 id=60 data-nosnippet>60</a>) -&gt; <span class="prelude-ty">Result</span>&lt;(), AppError&gt; {
 <a href=#61 id=61 data-nosnippet>61</a>    <span class="comment">// 1. Backup automático se major version mudou
 <a href=#62 id=62 data-nosnippet>62</a>    </span><span class="kw">if let </span><span class="prelude-val">Some</span>(backup_path) =
-<a href=#63 id=63 data-nosnippet>63</a>        database::backup::backup_if_major_update(app, previous_version, current_version)<span class="question-mark">?
+<a href=#63 id=63 data-nosnippet>63</a>        database::backup::auto::backup_if_major_update(app, previous_version, current_version)<span class="question-mark">?
 <a href=#64 id=64 data-nosnippet>64</a>    </span>{
 <a href=#65 id=65 data-nosnippet>65</a>        <span class="macro">tracing::info!</span>(<span class="string">"Backup automático criado em: {:?}"</span>, backup_path);
 <a href=#66 id=66 data-nosnippet>66</a>
