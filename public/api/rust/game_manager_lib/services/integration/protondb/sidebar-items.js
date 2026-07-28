@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["get_compatibility_summary","is_running_on_linux"],"struct":["ProtonDbSummary"]};
