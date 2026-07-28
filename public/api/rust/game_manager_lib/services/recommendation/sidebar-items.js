@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["analysis","core","filtering","profile","ranking","reports","scoring"]};
+window.SIDEBAR_ITEMS = {"mod":["analysis","cf_aggregator","core","filtering","profile","ranking","reports","scoring"]};

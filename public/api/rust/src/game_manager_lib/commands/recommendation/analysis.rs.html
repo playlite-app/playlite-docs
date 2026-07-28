@@ -53,7 +53,7 @@
 <a href=#53 id=53 data-nosnippet>53</a>
 <a href=#54 id=54 data-nosnippet>54</a>    <span class="kw">let </span>profile = calculate_user_profile(<span class="kw-2">&amp;</span>all_games_with_details, <span class="kw-2">&amp;</span>HashSet::new());
 <a href=#55 id=55 data-nosnippet>55</a>    <span class="kw">let </span>(cf_scores, <span class="kw">_</span>) =
-<a href=#56 id=56 data-nosnippet>56</a>        <span class="kw">crate</span>::services::cf_aggregator::build_cf_candidates(<span class="kw-2">&amp;</span>all_games_with_details);
+<a href=#56 id=56 data-nosnippet>56</a>        <span class="kw">crate</span>::services::recommendation::cf_aggregator::build_cf_candidates(<span class="kw-2">&amp;</span>all_games_with_details);
 <a href=#57 id=57 data-nosnippet>57</a>
 <a href=#58 id=58 data-nosnippet>58</a>    <span class="kw">let </span>config = RecommendationConfig::default();
 <a href=#59 id=59 data-nosnippet>59</a>    <span class="kw">let </span>user_settings = UserSettings::default();
