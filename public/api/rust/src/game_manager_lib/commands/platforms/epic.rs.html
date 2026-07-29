@@ -58,9 +58,9 @@
 <a href=#58 id=58 data-nosnippet>58</a>    <span class="kw">let </span>message = format_import_summary(<span class="string">"Epic"</span>, inserted, updated);
 <a href=#59 id=59 data-nosnippet>59</a>    <span class="macro">info!</span>(<span class="string">"{}"</span>, message);
 <a href=#60 id=60 data-nosnippet>60</a>
-<a href=#61 id=61 data-nosnippet>61</a>    trigger_enrichment_if_needed(<span class="kw-2">&amp;</span>app, newly_imported);
+<a href=#61 id=61 data-nosnippet>61</a>    <span class="kw">let _ </span>= app.emit(<span class="string">"library_updated"</span>, ());
 <a href=#62 id=62 data-nosnippet>62</a>
-<a href=#63 id=63 data-nosnippet>63</a>    <span class="kw">let _ </span>= app.emit(<span class="string">"library_updated"</span>, ());
+<a href=#63 id=63 data-nosnippet>63</a>    trigger_enrichment_if_needed(<span class="kw-2">&amp;</span>app, newly_imported);
 <a href=#64 id=64 data-nosnippet>64</a>
 <a href=#65 id=65 data-nosnippet>65</a>    <span class="prelude-val">Ok</span>(message)
 <a href=#66 id=66 data-nosnippet>66</a>}

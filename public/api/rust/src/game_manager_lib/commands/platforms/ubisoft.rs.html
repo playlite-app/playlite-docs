@@ -38,9 +38,9 @@
 <a href=#38 id=38 data-nosnippet>38</a>    <span class="kw">let </span>message = format_import_summary(<span class="string">"Ubisoft"</span>, inserted, updated);
 <a href=#39 id=39 data-nosnippet>39</a>    <span class="macro">info!</span>(<span class="string">"{}"</span>, message);
 <a href=#40 id=40 data-nosnippet>40</a>
-<a href=#41 id=41 data-nosnippet>41</a>    trigger_enrichment_if_needed(<span class="kw-2">&amp;</span>app, newly_imported);
+<a href=#41 id=41 data-nosnippet>41</a>    <span class="kw">let _ </span>= app.emit(<span class="string">"library_updated"</span>, ());
 <a href=#42 id=42 data-nosnippet>42</a>
-<a href=#43 id=43 data-nosnippet>43</a>    <span class="kw">let _ </span>= app.emit(<span class="string">"library_updated"</span>, ());
+<a href=#43 id=43 data-nosnippet>43</a>    trigger_enrichment_if_needed(<span class="kw-2">&amp;</span>app, newly_imported);
 <a href=#44 id=44 data-nosnippet>44</a>
 <a href=#45 id=45 data-nosnippet>45</a>    <span class="prelude-val">Ok</span>(message)
 <a href=#46 id=46 data-nosnippet>46</a>}
