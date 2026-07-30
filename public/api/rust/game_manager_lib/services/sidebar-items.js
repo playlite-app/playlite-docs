@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["cache","images","integration","recommendation","subscriptions","tags"]};
+window.SIDEBAR_ITEMS = {"mod":["cache","images","integration","rate_limiter","recommendation","subscriptions","tags"]};
