@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["cleanup_expired_cache","get_cache_stats","get_cached_api_data","get_stale_api_data","initialize_cache_db","save_cached_api_data"],"struct":["CacheStats"]};
+window.SIDEBAR_ITEMS = {"fn":["cleanup_expired_cache","get_cache_stats","get_cached_api_data","get_cached_nexus_games","get_stale_api_data","initialize_cache_db","nexus_cache_is_stale","save_cached_api_data","save_nexus_games_cache"],"struct":["CacheStats"]};

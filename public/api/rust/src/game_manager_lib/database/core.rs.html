@@ -140,7 +140,7 @@
 <a href=#140 id=140 data-nosnippet>140</a>        )"</span>,
 <a href=#141 id=141 data-nosnippet>141</a>        [],
 <a href=#142 id=142 data-nosnippet>142</a>    )
-<a href=#143 id=143 data-nosnippet>143</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#143 id=143 data-nosnippet>143</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#144 id=144 data-nosnippet>144</a>
 <a href=#145 id=145 data-nosnippet>145</a>    conn.execute(
 <a href=#146 id=146 data-nosnippet>146</a>        <span class="string">"CREATE TABLE IF NOT EXISTS game_details (
@@ -170,7 +170,7 @@
 <a href=#170 id=170 data-nosnippet>170</a>        )"</span>,
 <a href=#171 id=171 data-nosnippet>171</a>        [],
 <a href=#172 id=172 data-nosnippet>172</a>    )
-<a href=#173 id=173 data-nosnippet>173</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#173 id=173 data-nosnippet>173</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#174 id=174 data-nosnippet>174</a>
 <a href=#175 id=175 data-nosnippet>175</a>    conn.execute(
 <a href=#176 id=176 data-nosnippet>176</a>        <span class="string">"CREATE TABLE IF NOT EXISTS wishlist (
@@ -190,7 +190,7 @@
 <a href=#190 id=190 data-nosnippet>190</a>        )"</span>,
 <a href=#191 id=191 data-nosnippet>191</a>        [],
 <a href=#192 id=192 data-nosnippet>192</a>    )
-<a href=#193 id=193 data-nosnippet>193</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#193 id=193 data-nosnippet>193</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#194 id=194 data-nosnippet>194</a>
 <a href=#195 id=195 data-nosnippet>195</a>    conn.execute(
 <a href=#196 id=196 data-nosnippet>196</a>        <span class="string">"CREATE TABLE IF NOT EXISTS subscriptions (
@@ -200,26 +200,26 @@
 <a href=#200 id=200 data-nosnippet>200</a>    )"</span>,
 <a href=#201 id=201 data-nosnippet>201</a>        [],
 <a href=#202 id=202 data-nosnippet>202</a>    )
-<a href=#203 id=203 data-nosnippet>203</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#203 id=203 data-nosnippet>203</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#204 id=204 data-nosnippet>204</a>
 <a href=#205 id=205 data-nosnippet>205</a>    <span class="comment">// Índices
 <a href=#206 id=206 data-nosnippet>206</a>    </span>conn.execute(
 <a href=#207 id=207 data-nosnippet>207</a>        <span class="string">"CREATE INDEX IF NOT EXISTS idx_name ON games(name COLLATE NOCASE)"</span>,
 <a href=#208 id=208 data-nosnippet>208</a>        [],
 <a href=#209 id=209 data-nosnippet>209</a>    )
-<a href=#210 id=210 data-nosnippet>210</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#210 id=210 data-nosnippet>210</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#211 id=211 data-nosnippet>211</a>
 <a href=#212 id=212 data-nosnippet>212</a>    conn.execute(
 <a href=#213 id=213 data-nosnippet>213</a>        <span class="string">"CREATE INDEX IF NOT EXISTS idx_platform ON games(platform)"</span>,
 <a href=#214 id=214 data-nosnippet>214</a>        [],
 <a href=#215 id=215 data-nosnippet>215</a>    )
-<a href=#216 id=216 data-nosnippet>216</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#216 id=216 data-nosnippet>216</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#217 id=217 data-nosnippet>217</a>
 <a href=#218 id=218 data-nosnippet>218</a>    conn.execute(
 <a href=#219 id=219 data-nosnippet>219</a>        <span class="string">"CREATE INDEX IF NOT EXISTS idx_favorite ON games(favorite)"</span>,
 <a href=#220 id=220 data-nosnippet>220</a>        [],
 <a href=#221 id=221 data-nosnippet>221</a>    )
-<a href=#222 id=222 data-nosnippet>222</a>    .map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#222 id=222 data-nosnippet>222</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#223 id=223 data-nosnippet>223</a>
 <a href=#224 id=224 data-nosnippet>224</a>    conn.execute(<span class="string">"CREATE INDEX IF NOT EXISTS idx_status ON games(status)"</span>, [])
 <a href=#225 id=225 data-nosnippet>225</a>        .map_err(|e| e.to_string())<span class="question-mark">?</span>;
@@ -317,7 +317,7 @@
 <a href=#317 id=317 data-nosnippet>317</a>        "#</span>,
 <a href=#318 id=318 data-nosnippet>318</a>        [],
 <a href=#319 id=319 data-nosnippet>319</a>    )
-<a href=#320 id=320 data-nosnippet>320</a>    .map_err(|e: rusqlite::Error| e.to_string())<span class="question-mark">?</span>;
+<a href=#320 id=320 data-nosnippet>320</a>        .map_err(|e: rusqlite::Error| e.to_string())<span class="question-mark">?</span>;
 <a href=#321 id=321 data-nosnippet>321</a>
 <a href=#322 id=322 data-nosnippet>322</a>    <span class="prelude-val">Ok</span>(conn)
 <a href=#323 id=323 data-nosnippet>323</a>}
@@ -379,6 +379,7 @@
 <a href=#379 id=379 data-nosnippet>379</a>        <span class="string">"rawg_api_key"</span>,
 <a href=#380 id=380 data-nosnippet>380</a>        <span class="string">"gemini_api_key"</span>,
 <a href=#381 id=381 data-nosnippet>381</a>        <span class="string">"gamebrain_api_key"</span>,
-<a href=#382 id=382 data-nosnippet>382</a>    ]
-<a href=#383 id=383 data-nosnippet>383</a>}
+<a href=#382 id=382 data-nosnippet>382</a>        <span class="string">"nexus_api_key"</span>,
+<a href=#383 id=383 data-nosnippet>383</a>    ]
+<a href=#384 id=384 data-nosnippet>384</a>}
 </code></pre></div></section></main></body></html>
