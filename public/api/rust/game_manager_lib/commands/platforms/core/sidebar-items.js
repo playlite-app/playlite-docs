@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["format_import_empty","format_import_summary","format_login_success","trigger_enrichment_if_needed"],"struct":["NewlyImportedGame","ScanGameInput","ScanResult"]};
+window.SIDEBAR_ITEMS = {"fn":["format_import_empty","format_import_summary","format_login_success","spawn_import","trigger_enrichment_if_needed"],"struct":["NewlyImportedGame","ScanGameInput","ScanResult"]};
