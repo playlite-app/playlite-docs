@@ -90,7 +90,7 @@
 <a href=#90 id=90 data-nosnippet>90</a>///
 <a href=#91 id=91 data-nosnippet>91</a>/// Inclui informações expandidas como descrição, metacritic score, desenvolvedoras e tags.
 <a href=#92 id=92 data-nosnippet>92</a></span><span class="attr">#[derive(Debug, Serialize, Deserialize)]
-<a href=#93 id=93 data-nosnippet>93</a></span><span class="kw">pub struct </span>GameDetails {
+<a href=#93 id=93 data-nosnippet>93</a></span><span class="kw">pub struct </span>RawgGameDetails {
 <a href=#94 id=94 data-nosnippet>94</a>    <span class="kw">pub </span>id: i32,
 <a href=#95 id=95 data-nosnippet>95</a>    <span class="kw">pub </span>name: String,
 <a href=#96 id=96 data-nosnippet>96</a>    <span class="attr">#[serde(rename(deserialize = <span class="string">"description_raw"</span>, serialize = <span class="string">"descriptionRaw"</span>))]
@@ -147,7 +147,7 @@
 <a href=#147 id=147 data-nosnippet>147</a><span class="doccomment">/// Busca detalhes completos de um jogo específico.
 <a href=#148 id=148 data-nosnippet>148</a>///
 <a href=#149 id=149 data-nosnippet>149</a>/// Converte o nome do jogo em slug (formato URL-friendly) e busca informações detalhadas na API RAWG.
-<a href=#150 id=150 data-nosnippet>150</a></span><span class="kw">pub async fn </span>fetch_game_details(api_key: <span class="kw-2">&amp;</span>str, query: String) -&gt; <span class="prelude-ty">Result</span>&lt;GameDetails, String&gt; {
+<a href=#150 id=150 data-nosnippet>150</a></span><span class="kw">pub async fn </span>fetch_game_details(api_key: <span class="kw-2">&amp;</span>str, query: String) -&gt; <span class="prelude-ty">Result</span>&lt;RawgGameDetails, String&gt; {
 <a href=#151 id=151 data-nosnippet>151</a>    <span class="kw">let </span>identifier = <span class="kw">if </span>query.chars().all(char::is_numeric) {
 <a href=#152 id=152 data-nosnippet>152</a>        query
 <a href=#153 id=153 data-nosnippet>153</a>    } <span class="kw">else </span>{
@@ -172,7 +172,7 @@
 <a href=#172 id=172 data-nosnippet>172</a>        </span>.map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#173 id=173 data-nosnippet>173</a>
 <a href=#174 id=174 data-nosnippet>174</a>    <span class="kw">if </span>res.status().is_success() {
-<a href=#175 id=175 data-nosnippet>175</a>        <span class="kw">let </span>details: GameDetails = res.json().<span class="kw">await</span>.map_err(|e| e.to_string())<span class="question-mark">?</span>;
+<a href=#175 id=175 data-nosnippet>175</a>        <span class="kw">let </span>details: RawgGameDetails = res.json().<span class="kw">await</span>.map_err(|e| e.to_string())<span class="question-mark">?</span>;
 <a href=#176 id=176 data-nosnippet>176</a>        <span class="prelude-val">Ok</span>(details)
 <a href=#177 id=177 data-nosnippet>177</a>    } <span class="kw">else if </span>res.status().as_u16() == <span class="number">404 </span>{
 <a href=#178 id=178 data-nosnippet>178</a>        <span class="prelude-val">Err</span>(<span class="string">"Jogo não encontrado na RAWG"</span>.into())

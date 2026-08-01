@@ -57,7 +57,7 @@
 <a href=#57 id=57 data-nosnippet>57</a>    name: <span class="kw-2">&amp;</span>str,
 <a href=#58 id=58 data-nosnippet>58</a>    cache_conn: <span class="kw-2">&amp;</span>rusqlite::Connection,
 <a href=#59 id=59 data-nosnippet>59</a>    bypass_cache: bool,
-<a href=#60 id=60 data-nosnippet>60</a>) -&gt; <span class="prelude-ty">Option</span>&lt;rawg::GameDetails&gt; {
+<a href=#60 id=60 data-nosnippet>60</a>) -&gt; <span class="prelude-ty">Option</span>&lt;rawg::RawgGameDetails&gt; {
 <a href=#61 id=61 data-nosnippet>61</a>    <span class="kw">let </span>cache_key = rawg_cache_key(name);
 <a href=#62 id=62 data-nosnippet>62</a>
 <a href=#63 id=63 data-nosnippet>63</a>    <span class="kw">if </span>!bypass_cache {
@@ -65,7 +65,7 @@
 <a href=#65 id=65 data-nosnippet>65</a>            <span class="kw">if </span>cached == NOT_FOUND_MARKER {
 <a href=#66 id=66 data-nosnippet>66</a>                <span class="kw">return </span><span class="prelude-val">None</span>;
 <a href=#67 id=67 data-nosnippet>67</a>            }
-<a href=#68 id=68 data-nosnippet>68</a>            <span class="kw">if let </span><span class="prelude-val">Ok</span>(details) = serde_json::from_str::&lt;rawg::GameDetails&gt;(<span class="kw-2">&amp;</span>cached) {
+<a href=#68 id=68 data-nosnippet>68</a>            <span class="kw">if let </span><span class="prelude-val">Ok</span>(details) = serde_json::from_str::&lt;rawg::RawgGameDetails&gt;(<span class="kw-2">&amp;</span>cached) {
 <a href=#69 id=69 data-nosnippet>69</a>                <span class="kw">return </span><span class="prelude-val">Some</span>(details);
 <a href=#70 id=70 data-nosnippet>70</a>            }
 <a href=#71 id=71 data-nosnippet>71</a>        }
@@ -132,7 +132,7 @@
 <a href=#132 id=132 data-nosnippet>132</a>    api_key: <span class="kw-2">&amp;</span>str,
 <a href=#133 id=133 data-nosnippet>133</a>    name: <span class="kw-2">&amp;</span>str,
 <a href=#134 id=134 data-nosnippet>134</a>    cache_conn: <span class="kw-2">&amp;</span>rusqlite::Connection,
-<a href=#135 id=135 data-nosnippet>135</a>) -&gt; <span class="prelude-ty">Option</span>&lt;rawg::GameDetails&gt; {
+<a href=#135 id=135 data-nosnippet>135</a>) -&gt; <span class="prelude-ty">Option</span>&lt;rawg::RawgGameDetails&gt; {
 <a href=#136 id=136 data-nosnippet>136</a>    fetch_rawg_metadata_inner(api_key, name, cache_conn, <span class="bool-val">false</span>).<span class="kw">await
 <a href=#137 id=137 data-nosnippet>137</a></span>}
 <a href=#138 id=138 data-nosnippet>138</a>
@@ -145,7 +145,7 @@
 <a href=#145 id=145 data-nosnippet>145</a>    api_key: <span class="kw-2">&amp;</span>str,
 <a href=#146 id=146 data-nosnippet>146</a>    name: <span class="kw-2">&amp;</span>str,
 <a href=#147 id=147 data-nosnippet>147</a>    cache_conn: <span class="kw-2">&amp;</span>rusqlite::Connection,
-<a href=#148 id=148 data-nosnippet>148</a>) -&gt; <span class="prelude-ty">Option</span>&lt;rawg::GameDetails&gt; {
+<a href=#148 id=148 data-nosnippet>148</a>) -&gt; <span class="prelude-ty">Option</span>&lt;rawg::RawgGameDetails&gt; {
 <a href=#149 id=149 data-nosnippet>149</a>    fetch_rawg_metadata_inner(api_key, name, cache_conn, <span class="bool-val">true</span>).<span class="kw">await
 <a href=#150 id=150 data-nosnippet>150</a></span>}
 <a href=#151 id=151 data-nosnippet>151</a>

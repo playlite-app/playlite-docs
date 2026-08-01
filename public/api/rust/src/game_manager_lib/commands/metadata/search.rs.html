@@ -34,7 +34,7 @@
 <a href=#34 id=34 data-nosnippet>34</a></span><span class="kw">pub async fn </span>fetch_game_details(
 <a href=#35 id=35 data-nosnippet>35</a>    app: AppHandle,
 <a href=#36 id=36 data-nosnippet>36</a>    query: String,
-<a href=#37 id=37 data-nosnippet>37</a>) -&gt; <span class="prelude-ty">Result</span>&lt;rawg::GameDetails, AppError&gt; {
+<a href=#37 id=37 data-nosnippet>37</a>) -&gt; <span class="prelude-ty">Result</span>&lt;rawg::RawgGameDetails, AppError&gt; {
 <a href=#38 id=38 data-nosnippet>38</a>    <span class="kw">let </span>api_key = database::get_secret(<span class="kw-2">&amp;</span>app, <span class="string">"rawg_api_key"</span>)<span class="question-mark">?</span>;
 <a href=#39 id=39 data-nosnippet>39</a>    rawg::fetch_game_details(<span class="kw-2">&amp;</span>api_key, query)
 <a href=#40 id=40 data-nosnippet>40</a>        .<span class="kw">await
