@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"enum":["ImportConfidence","Platform"],"struct":["Game","GameDataPath","GameDetails","GameExtras","PcgwScrapedData","Subscription","SystemRequirements","WishlistGame"]};
+window.SIDEBAR_ITEMS = {"enum":["ImportConfidence","Platform","PlaytimeSource"],"struct":["Game","GameDataPath","GameDetails","GameExtras","PcgwScrapedData","Subscription","SystemRequirements","WishlistGame"]};

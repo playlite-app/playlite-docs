@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["debug_populate_nexus_cache"]};
+window.SIDEBAR_ITEMS = {"fn":["backfill_slug_names","debug_populate_nexus_cache"]};

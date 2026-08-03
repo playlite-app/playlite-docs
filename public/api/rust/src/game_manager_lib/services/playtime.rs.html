@@ -112,11 +112,12 @@
 <a href=#112 id=112 data-nosnippet>112</a>    )<span class="question-mark">?</span>;
 <a href=#113 id=113 data-nosnippet>113</a>    <span class="kw">let </span>new_playtime = current.unwrap_or(<span class="number">0</span>) + <span class="number">1</span>;
 <a href=#114 id=114 data-nosnippet>114</a>    <span class="kw">let </span>status = status_logic::calculate_status(new_playtime);
-<a href=#115 id=115 data-nosnippet>115</a>
-<a href=#116 id=116 data-nosnippet>116</a>    conn.execute(
-<a href=#117 id=117 data-nosnippet>117</a>        <span class="string">"UPDATE games SET playtime = ?1, status = ?2, playtime_source = 'local' WHERE id = ?3"</span>,
-<a href=#118 id=118 data-nosnippet>118</a>        <span class="macro">rusqlite::params!</span>[new_playtime, status, game_id],
-<a href=#119 id=119 data-nosnippet>119</a>    )<span class="question-mark">?</span>;
-<a href=#120 id=120 data-nosnippet>120</a>    <span class="prelude-val">Ok</span>(())
-<a href=#121 id=121 data-nosnippet>121</a>}
+<a href=#115 id=115 data-nosnippet>115</a>    <span class="kw">let </span>source = <span class="kw">crate</span>::models::PlaytimeSource::Local.as_db_str();
+<a href=#116 id=116 data-nosnippet>116</a>
+<a href=#117 id=117 data-nosnippet>117</a>    conn.execute(
+<a href=#118 id=118 data-nosnippet>118</a>        <span class="string">"UPDATE games SET playtime = ?1, status = ?2, playtime_source = ?3 WHERE id = ?4"</span>,
+<a href=#119 id=119 data-nosnippet>119</a>        <span class="macro">rusqlite::params!</span>[new_playtime, status, source, game_id],
+<a href=#120 id=120 data-nosnippet>120</a>    )<span class="question-mark">?</span>;
+<a href=#121 id=121 data-nosnippet>121</a>    <span class="prelude-val">Ok</span>(())
+<a href=#122 id=122 data-nosnippet>122</a>}
 </code></pre></div></section></main></body></html>

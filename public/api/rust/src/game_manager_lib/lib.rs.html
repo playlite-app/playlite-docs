@@ -163,40 +163,41 @@
 <a href=#163 id=163 data-nosnippet>163</a>            commands::settings::set_secrets,
 <a href=#164 id=164 data-nosnippet>164</a>            <span class="comment">// Comandos de Debug
 <a href=#165 id=165 data-nosnippet>165</a>            </span>commands::debug::debug_populate_nexus_cache,
-<a href=#166 id=166 data-nosnippet>166</a>            <span class="comment">// Comandos de Recomendação
-<a href=#167 id=167 data-nosnippet>167</a>            </span>commands::recommendation::core::get_user_profile,
-<a href=#168 id=168 data-nosnippet>168</a>            commands::recommendation::core::recommend_hybrid_library,
-<a href=#169 id=169 data-nosnippet>169</a>            commands::recommendation::core::recommend_collaborative_library,
-<a href=#170 id=170 data-nosnippet>170</a>            commands::recommendation::core::recommend_from_library,
-<a href=#171 id=171 data-nosnippet>171</a>            commands::recommendation::analysis::generate_recommendation_analysis,
-<a href=#172 id=172 data-nosnippet>172</a>            <span class="comment">// Comandos de Tradução de Descrição
-<a href=#173 id=173 data-nosnippet>173</a>            </span>commands::ai_translation::translate_description,
-<a href=#174 id=174 data-nosnippet>174</a>            <span class="comment">// Comandos de Conquistas de Jogos
-<a href=#175 id=175 data-nosnippet>175</a>            </span>commands::achievements::get_recent_achievements,
-<a href=#176 id=176 data-nosnippet>176</a>            <span class="comment">// Comandos de Cache de Metadados
-<a href=#177 id=177 data-nosnippet>177</a>            </span>commands::caches::cleanup_cache,
-<a href=#178 id=178 data-nosnippet>178</a>            commands::caches::clear_all_cache,
-<a href=#179 id=179 data-nosnippet>179</a>            commands::caches::get_detailed_cache_stats,
-<a href=#180 id=180 data-nosnippet>180</a>            <span class="comment">// Comandos de Sistema
-<a href=#181 id=181 data-nosnippet>181</a>            </span>commands::system::open_folder,
-<a href=#182 id=182 data-nosnippet>182</a>            commands::system::open_file,
-<a href=#183 id=183 data-nosnippet>183</a>            <span class="comment">// Comandos de Versão e SO
-<a href=#184 id=184 data-nosnippet>184</a>            </span>commands::version::get_app_version,
-<a href=#185 id=185 data-nosnippet>185</a>            commands::version::get_app_version_info,
-<a href=#186 id=186 data-nosnippet>186</a>            commands::version::is_updater_enabled,
-<a href=#187 id=187 data-nosnippet>187</a>            <span class="comment">// Comandos de Imagem
-<a href=#188 id=188 data-nosnippet>188</a>            </span>services::images::cache_cover_image,
-<a href=#189 id=189 data-nosnippet>189</a>            services::images::check_local_cover,
-<a href=#190 id=190 data-nosnippet>190</a>            services::images::clear_cover_cache,
-<a href=#191 id=191 data-nosnippet>191</a>            <span class="comment">// Comandos de Subscricoes
-<a href=#192 id=192 data-nosnippet>192</a>            </span>commands::subscriptions::get_amazon_luna_catalog,
-<a href=#193 id=193 data-nosnippet>193</a>            commands::subscriptions::get_game_pass_catalog,
-<a href=#194 id=194 data-nosnippet>194</a>            commands::subscriptions::get_ea_play_catalog,
-<a href=#195 id=195 data-nosnippet>195</a>            commands::subscriptions::get_ubisoft_plus_catalog,
-<a href=#196 id=196 data-nosnippet>196</a>            commands::subscriptions::get_subscription_settings,
-<a href=#197 id=197 data-nosnippet>197</a>            commands::subscriptions::save_subscription_settings
-<a href=#198 id=198 data-nosnippet>198</a>        ])
-<a href=#199 id=199 data-nosnippet>199</a>        .run(<span class="macro">tauri::generate_context!</span>())
-<a href=#200 id=200 data-nosnippet>200</a>        .expect(<span class="string">"error while running tauri application"</span>);
-<a href=#201 id=201 data-nosnippet>201</a>}
+<a href=#166 id=166 data-nosnippet>166</a>            commands::debug::backfill_slug_names,
+<a href=#167 id=167 data-nosnippet>167</a>            <span class="comment">// Comandos de Recomendação
+<a href=#168 id=168 data-nosnippet>168</a>            </span>commands::recommendation::core::get_user_profile,
+<a href=#169 id=169 data-nosnippet>169</a>            commands::recommendation::core::recommend_hybrid_library,
+<a href=#170 id=170 data-nosnippet>170</a>            commands::recommendation::core::recommend_collaborative_library,
+<a href=#171 id=171 data-nosnippet>171</a>            commands::recommendation::core::recommend_from_library,
+<a href=#172 id=172 data-nosnippet>172</a>            commands::recommendation::analysis::generate_recommendation_analysis,
+<a href=#173 id=173 data-nosnippet>173</a>            <span class="comment">// Comandos de Tradução de Descrição
+<a href=#174 id=174 data-nosnippet>174</a>            </span>commands::ai_translation::translate_description,
+<a href=#175 id=175 data-nosnippet>175</a>            <span class="comment">// Comandos de Conquistas de Jogos
+<a href=#176 id=176 data-nosnippet>176</a>            </span>commands::achievements::get_recent_achievements,
+<a href=#177 id=177 data-nosnippet>177</a>            <span class="comment">// Comandos de Cache de Metadados
+<a href=#178 id=178 data-nosnippet>178</a>            </span>commands::caches::cleanup_cache,
+<a href=#179 id=179 data-nosnippet>179</a>            commands::caches::clear_all_cache,
+<a href=#180 id=180 data-nosnippet>180</a>            commands::caches::get_detailed_cache_stats,
+<a href=#181 id=181 data-nosnippet>181</a>            <span class="comment">// Comandos de Sistema
+<a href=#182 id=182 data-nosnippet>182</a>            </span>commands::system::open_folder,
+<a href=#183 id=183 data-nosnippet>183</a>            commands::system::open_file,
+<a href=#184 id=184 data-nosnippet>184</a>            <span class="comment">// Comandos de Versão e SO
+<a href=#185 id=185 data-nosnippet>185</a>            </span>commands::version::get_app_version,
+<a href=#186 id=186 data-nosnippet>186</a>            commands::version::get_app_version_info,
+<a href=#187 id=187 data-nosnippet>187</a>            commands::version::is_updater_enabled,
+<a href=#188 id=188 data-nosnippet>188</a>            <span class="comment">// Comandos de Imagem
+<a href=#189 id=189 data-nosnippet>189</a>            </span>services::images::cache_cover_image,
+<a href=#190 id=190 data-nosnippet>190</a>            services::images::check_local_cover,
+<a href=#191 id=191 data-nosnippet>191</a>            services::images::clear_cover_cache,
+<a href=#192 id=192 data-nosnippet>192</a>            <span class="comment">// Comandos de Subscricoes
+<a href=#193 id=193 data-nosnippet>193</a>            </span>commands::subscriptions::get_amazon_luna_catalog,
+<a href=#194 id=194 data-nosnippet>194</a>            commands::subscriptions::get_game_pass_catalog,
+<a href=#195 id=195 data-nosnippet>195</a>            commands::subscriptions::get_ea_play_catalog,
+<a href=#196 id=196 data-nosnippet>196</a>            commands::subscriptions::get_ubisoft_plus_catalog,
+<a href=#197 id=197 data-nosnippet>197</a>            commands::subscriptions::get_subscription_settings,
+<a href=#198 id=198 data-nosnippet>198</a>            commands::subscriptions::save_subscription_settings
+<a href=#199 id=199 data-nosnippet>199</a>        ])
+<a href=#200 id=200 data-nosnippet>200</a>        .run(<span class="macro">tauri::generate_context!</span>())
+<a href=#201 id=201 data-nosnippet>201</a>        .expect(<span class="string">"error while running tauri application"</span>);
+<a href=#202 id=202 data-nosnippet>202</a>}
 </code></pre></div></section></main></body></html>
