@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["fetch_rawg_metadata","fetch_rawg_metadata_fresh","resolve_steam_app_id"],"struct":["EnrichCompletePayload","EnrichProgress","SteamIdResolution"]};
+window.SIDEBAR_ITEMS = {"fn":["fetch_rawg_metadata","fetch_rawg_metadata_fresh","resolve_steam_app_id","save_game_details"],"struct":["EnrichCompletePayload","EnrichProgress","ProcessedGameDetails","SteamIdResolution"]};

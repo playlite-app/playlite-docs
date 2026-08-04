@@ -169,7 +169,7 @@
 <a href=#169 id=169 data-nosnippet>169</a>    <span class="kw">let </span><span class="kw-2">mut </span>stmt = conn.prepare(
 <a href=#170 id=170 data-nosnippet>170</a>        <span class="string">"SELECT
 <a href=#171 id=171 data-nosnippet>171</a>            g.id, g.name, g.slug, g.playtime, g.favorite, g.user_rating, g.cover_url,
-<a href=#172 id=172 data-nosnippet>172</a>            g.platform_game_id, g.last_played, g.added_at, g.platform, g.playtime_source,
+<a href=#172 id=172 data-nosnippet>172</a>            g.platform_game_id, g.last_played, g.added_at, g.platform, g.playtime_source, g.alternative_names,
 <a href=#173 id=173 data-nosnippet>173</a>            gd.genres, gd.steam_app_id, gd.release_date, gd.series, gd.tags
 <a href=#174 id=174 data-nosnippet>174</a>         FROM games g
 <a href=#175 id=175 data-nosnippet>175</a>         LEFT JOIN game_details gd ON g.id = gd.game_id
@@ -178,60 +178,60 @@
 <a href=#178 id=178 data-nosnippet>178</a>
 <a href=#179 id=179 data-nosnippet>179</a>    <span class="kw">let </span>games: <span class="prelude-ty">Result</span>&lt;Vec&lt;GameWithDetails&gt;, <span class="kw">_</span>&gt; = stmt
 <a href=#180 id=180 data-nosnippet>180</a>        .query_map([], |row| {
-<a href=#181 id=181 data-nosnippet>181</a>            <span class="kw">let </span>game = Game {
-<a href=#182 id=182 data-nosnippet>182</a>                id: row.get(<span class="number">0</span>)<span class="question-mark">?</span>,
-<a href=#183 id=183 data-nosnippet>183</a>                name: row.get(<span class="number">1</span>)<span class="question-mark">?</span>,
-<a href=#184 id=184 data-nosnippet>184</a>                slug: row.get(<span class="number">2</span>)<span class="question-mark">?</span>,
-<a href=#185 id=185 data-nosnippet>185</a>                playtime: row.get(<span class="number">3</span>)<span class="question-mark">?</span>,
-<a href=#186 id=186 data-nosnippet>186</a>                favorite: row.get(<span class="number">4</span>)<span class="question-mark">?</span>,
-<a href=#187 id=187 data-nosnippet>187</a>                user_rating: row.get(<span class="number">5</span>)<span class="question-mark">?</span>,
-<a href=#188 id=188 data-nosnippet>188</a>                cover_url: row.get(<span class="number">6</span>)<span class="question-mark">?</span>,
-<a href=#189 id=189 data-nosnippet>189</a>                platform_game_id: row.get(<span class="number">7</span>)<span class="question-mark">?</span>,
-<a href=#190 id=190 data-nosnippet>190</a>                last_played: row.get(<span class="number">8</span>)<span class="question-mark">?</span>,
-<a href=#191 id=191 data-nosnippet>191</a>                added_at: row.get(<span class="number">9</span>)<span class="question-mark">?</span>,
-<a href=#192 id=192 data-nosnippet>192</a>                platform: row.get::&lt;<span class="kw">_</span>, String&gt;(<span class="number">10</span>)<span class="question-mark">?</span>.parse().unwrap_or(Platform::Outra),
-<a href=#193 id=193 data-nosnippet>193</a>                <span class="comment">// Campos não utilizados mas necessários
-<a href=#194 id=194 data-nosnippet>194</a>                </span>installed: <span class="bool-val">false</span>,
-<a href=#195 id=195 data-nosnippet>195</a>                import_confidence: <span class="prelude-val">None</span>,
-<a href=#196 id=196 data-nosnippet>196</a>                install_path: <span class="prelude-val">None</span>,
-<a href=#197 id=197 data-nosnippet>197</a>                executable_path: <span class="prelude-val">None</span>,
-<a href=#198 id=198 data-nosnippet>198</a>                launch_args: <span class="prelude-val">None</span>,
-<a href=#199 id=199 data-nosnippet>199</a>                status: <span class="prelude-val">None</span>,
-<a href=#200 id=200 data-nosnippet>200</a>                playtime_source: row
-<a href=#201 id=201 data-nosnippet>201</a>                    .get::&lt;<span class="kw">_</span>, <span class="prelude-ty">Option</span>&lt;String&gt;&gt;(<span class="number">11</span>)<span class="question-mark">?
-<a href=#202 id=202 data-nosnippet>202</a>                    </span>.and_then(|s| s.parse().ok()),
-<a href=#203 id=203 data-nosnippet>203</a>                genres: <span class="prelude-val">None</span>,
-<a href=#204 id=204 data-nosnippet>204</a>                developer: <span class="prelude-val">None</span>,
-<a href=#205 id=205 data-nosnippet>205</a>                is_adult: <span class="bool-val">false</span>,
-<a href=#206 id=206 data-nosnippet>206</a>            };
-<a href=#207 id=207 data-nosnippet>207</a>
-<a href=#208 id=208 data-nosnippet>208</a>            <span class="kw">let </span>genres_json: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">12</span>)<span class="question-mark">?</span>;
-<a href=#209 id=209 data-nosnippet>209</a>            <span class="kw">let </span>genres: Vec&lt;String&gt; = genres_json
-<a href=#210 id=210 data-nosnippet>210</a>                .as_ref()
-<a href=#211 id=211 data-nosnippet>211</a>                .map(|s| {
-<a href=#212 id=212 data-nosnippet>212</a>                    <span class="comment">// Tentar parsear como JSON primeiro
-<a href=#213 id=213 data-nosnippet>213</a>                    </span><span class="kw">if let </span><span class="prelude-val">Ok</span>(vec) = serde_json::from_str::&lt;Vec&lt;String&gt;&gt;(s) {
-<a href=#214 id=214 data-nosnippet>214</a>                        vec
-<a href=#215 id=215 data-nosnippet>215</a>                    } <span class="kw">else </span>{
-<a href=#216 id=216 data-nosnippet>216</a>                        <span class="comment">// Fallback: parsear como comma-separated string
-<a href=#217 id=217 data-nosnippet>217</a>                        </span>s.split(<span class="string">','</span>)
-<a href=#218 id=218 data-nosnippet>218</a>                            .map(|g| g.trim().to_string())
-<a href=#219 id=219 data-nosnippet>219</a>                            .filter(|g| !g.is_empty())
-<a href=#220 id=220 data-nosnippet>220</a>                            .collect()
-<a href=#221 id=221 data-nosnippet>221</a>                    }
-<a href=#222 id=222 data-nosnippet>222</a>                })
-<a href=#223 id=223 data-nosnippet>223</a>                .unwrap_or_default();
-<a href=#224 id=224 data-nosnippet>224</a>
-<a href=#225 id=225 data-nosnippet>225</a>            <span class="kw">let </span>steam_app_id_str: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">13</span>)<span class="question-mark">?</span>;
-<a href=#226 id=226 data-nosnippet>226</a>            <span class="kw">let </span>steam_app_id: <span class="prelude-ty">Option</span>&lt;u32&gt; = steam_app_id_str.and_then(|s| s.parse().ok());
-<a href=#227 id=227 data-nosnippet>227</a>
-<a href=#228 id=228 data-nosnippet>228</a>            <span class="kw">let </span>release_date: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">14</span>)<span class="question-mark">?</span>;
-<a href=#229 id=229 data-nosnippet>229</a>            <span class="kw">let </span>release_year = release_date.and_then(|d| parse_release_year(<span class="kw-2">&amp;</span>d));
-<a href=#230 id=230 data-nosnippet>230</a>
-<a href=#231 id=231 data-nosnippet>231</a>            <span class="kw">let </span>series: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">15</span>)<span class="question-mark">?</span>;
-<a href=#232 id=232 data-nosnippet>232</a>
-<a href=#233 id=233 data-nosnippet>233</a>            <span class="comment">// Buscar tags do JSON na coluna tags
-<a href=#234 id=234 data-nosnippet>234</a>            </span><span class="kw">let </span>tags_json: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">16</span>)<span class="question-mark">?</span>;
+<a href=#181 id=181 data-nosnippet>181</a>            <span class="kw">let </span>alt_names_json: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">12</span>)<span class="question-mark">?</span>;
+<a href=#182 id=182 data-nosnippet>182</a>            <span class="kw">let </span>alternative_names = alt_names_json.and_then(|s| serde_json::from_str(<span class="kw-2">&amp;</span>s).ok());
+<a href=#183 id=183 data-nosnippet>183</a>
+<a href=#184 id=184 data-nosnippet>184</a>            <span class="kw">let </span>game = Game {
+<a href=#185 id=185 data-nosnippet>185</a>                id: row.get(<span class="number">0</span>)<span class="question-mark">?</span>,
+<a href=#186 id=186 data-nosnippet>186</a>                name: row.get(<span class="number">1</span>)<span class="question-mark">?</span>,
+<a href=#187 id=187 data-nosnippet>187</a>                slug: row.get(<span class="number">2</span>)<span class="question-mark">?</span>,
+<a href=#188 id=188 data-nosnippet>188</a>                playtime: row.get(<span class="number">3</span>)<span class="question-mark">?</span>,
+<a href=#189 id=189 data-nosnippet>189</a>                favorite: row.get(<span class="number">4</span>)<span class="question-mark">?</span>,
+<a href=#190 id=190 data-nosnippet>190</a>                user_rating: row.get(<span class="number">5</span>)<span class="question-mark">?</span>,
+<a href=#191 id=191 data-nosnippet>191</a>                cover_url: row.get(<span class="number">6</span>)<span class="question-mark">?</span>,
+<a href=#192 id=192 data-nosnippet>192</a>                platform_game_id: row.get(<span class="number">7</span>)<span class="question-mark">?</span>,
+<a href=#193 id=193 data-nosnippet>193</a>                last_played: row.get(<span class="number">8</span>)<span class="question-mark">?</span>,
+<a href=#194 id=194 data-nosnippet>194</a>                added_at: row.get(<span class="number">9</span>)<span class="question-mark">?</span>,
+<a href=#195 id=195 data-nosnippet>195</a>                platform: row.get::&lt;<span class="kw">_</span>, String&gt;(<span class="number">10</span>)<span class="question-mark">?</span>.parse().unwrap_or(Platform::Outra),
+<a href=#196 id=196 data-nosnippet>196</a>                alternative_names,
+<a href=#197 id=197 data-nosnippet>197</a>                installed: <span class="bool-val">false</span>,
+<a href=#198 id=198 data-nosnippet>198</a>                import_confidence: <span class="prelude-val">None</span>,
+<a href=#199 id=199 data-nosnippet>199</a>                install_path: <span class="prelude-val">None</span>,
+<a href=#200 id=200 data-nosnippet>200</a>                executable_path: <span class="prelude-val">None</span>,
+<a href=#201 id=201 data-nosnippet>201</a>                launch_args: <span class="prelude-val">None</span>,
+<a href=#202 id=202 data-nosnippet>202</a>                status: <span class="prelude-val">None</span>,
+<a href=#203 id=203 data-nosnippet>203</a>                playtime_source: row
+<a href=#204 id=204 data-nosnippet>204</a>                    .get::&lt;<span class="kw">_</span>, <span class="prelude-ty">Option</span>&lt;String&gt;&gt;(<span class="number">11</span>)<span class="question-mark">?
+<a href=#205 id=205 data-nosnippet>205</a>                    </span>.and_then(|s| s.parse().ok()),
+<a href=#206 id=206 data-nosnippet>206</a>                genres: <span class="prelude-val">None</span>,
+<a href=#207 id=207 data-nosnippet>207</a>                developer: <span class="prelude-val">None</span>,
+<a href=#208 id=208 data-nosnippet>208</a>                is_adult: <span class="bool-val">false</span>,
+<a href=#209 id=209 data-nosnippet>209</a>            };
+<a href=#210 id=210 data-nosnippet>210</a>
+<a href=#211 id=211 data-nosnippet>211</a>            <span class="kw">let </span>genres_json: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">13</span>)<span class="question-mark">?</span>;
+<a href=#212 id=212 data-nosnippet>212</a>            <span class="kw">let </span>genres: Vec&lt;String&gt; = genres_json
+<a href=#213 id=213 data-nosnippet>213</a>                .as_ref()
+<a href=#214 id=214 data-nosnippet>214</a>                .map(|s| {
+<a href=#215 id=215 data-nosnippet>215</a>                    <span class="kw">if let </span><span class="prelude-val">Ok</span>(vec) = serde_json::from_str::&lt;Vec&lt;String&gt;&gt;(s) {
+<a href=#216 id=216 data-nosnippet>216</a>                        vec
+<a href=#217 id=217 data-nosnippet>217</a>                    } <span class="kw">else </span>{
+<a href=#218 id=218 data-nosnippet>218</a>                        s.split(<span class="string">','</span>)
+<a href=#219 id=219 data-nosnippet>219</a>                            .map(|g| g.trim().to_string())
+<a href=#220 id=220 data-nosnippet>220</a>                            .filter(|g| !g.is_empty())
+<a href=#221 id=221 data-nosnippet>221</a>                            .collect()
+<a href=#222 id=222 data-nosnippet>222</a>                    }
+<a href=#223 id=223 data-nosnippet>223</a>                })
+<a href=#224 id=224 data-nosnippet>224</a>                .unwrap_or_default();
+<a href=#225 id=225 data-nosnippet>225</a>
+<a href=#226 id=226 data-nosnippet>226</a>            <span class="kw">let </span>steam_app_id_str: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">14</span>)<span class="question-mark">?</span>;
+<a href=#227 id=227 data-nosnippet>227</a>            <span class="kw">let </span>steam_app_id: <span class="prelude-ty">Option</span>&lt;u32&gt; = steam_app_id_str.and_then(|s| s.parse().ok());
+<a href=#228 id=228 data-nosnippet>228</a>
+<a href=#229 id=229 data-nosnippet>229</a>            <span class="kw">let </span>release_date: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">15</span>)<span class="question-mark">?</span>;
+<a href=#230 id=230 data-nosnippet>230</a>            <span class="kw">let </span>release_year = release_date.and_then(|d| parse_release_year(<span class="kw-2">&amp;</span>d));
+<a href=#231 id=231 data-nosnippet>231</a>
+<a href=#232 id=232 data-nosnippet>232</a>            <span class="kw">let </span>series: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">16</span>)<span class="question-mark">?</span>;
+<a href=#233 id=233 data-nosnippet>233</a>
+<a href=#234 id=234 data-nosnippet>234</a>            <span class="kw">let </span>tags_json: <span class="prelude-ty">Option</span>&lt;String&gt; = row.get(<span class="number">17</span>)<span class="question-mark">?</span>;
 <a href=#235 id=235 data-nosnippet>235</a>            <span class="kw">let </span>tags: Vec&lt;<span class="kw">crate</span>::models::GameTag&gt; = tags_json
 <a href=#236 id=236 data-nosnippet>236</a>                .as_ref()
 <a href=#237 id=237 data-nosnippet>237</a>                .and_then(|s| serde_json::from_str(s).ok())

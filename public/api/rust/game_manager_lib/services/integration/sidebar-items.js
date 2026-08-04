@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"mod":["gamebrain","gamerpower","gemini","itad","nexus","pcgamingwiki","protondb","rawg","steam_api"]};
+window.SIDEBAR_ITEMS = {"mod":["gamebrain","gamerpower","gemini","hltb","itad","nexus","pcgamingwiki","protondb","rawg","steam_api"]};
